@@ -51,9 +51,7 @@ function targe2_mesher(commands; varargin)
 # view(2)
 #
 # See also: 
-
-    in='in';
-    out ='out';
+ 
     quadratic= false;
     mergetolerance =eps;
     for arg in args
@@ -76,7 +74,9 @@ function targe2_mesher(commands; varargin)
     (outpath, outio)=mktemp()
     
     if @windows()
-        c="Targe2.exe" * " -i " inpath " -f  2  -o " outpath;
+        
+        c=Pkg.dir("Targe2","bin") * "Targe2.exe" * " -i " inpath " -f  2  -o " outpath;
+        show(c)
     elseif @linux() 
         #exec=['"' fineale_path filesep 'meshing' filesep 'triangle' filesep 'targe2' filesep 'targe2_GLNX86"'];
         # c=[exec ' -i ' in ' -f  2 -o ' out ];

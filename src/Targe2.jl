@@ -1,6 +1,6 @@
 module Targe2
 
-function targe2_mesher(commands; varargin)
+function targe2mesher(commands; args...)
 # Automatic triangulation of a general 2-D domain. 
 #
 # function [fens,fes,groups,edge_fes,edge_groups] =
@@ -65,8 +65,9 @@ function targe2_mesher(commands; varargin)
     
     # Input and output file
     (inpath, inio)=mktemp()
+    show(inpath)
     
-    @printf(inio,'%s\n',commands);
+    @printf(inio,"%s\n",commands);
     
     close (inio);
 
@@ -75,7 +76,7 @@ function targe2_mesher(commands; varargin)
     
     if @windows()
         
-        c=Pkg.dir("Targe2","bin") * "Targe2.exe" * " -i " inpath " -f  2  -o " outpath;
+        c=Pkg.dir("Targe2","bin") * "Targe2.exe" * " -i " * inpath * " -f  2  -o " * outpath;
         show(c)
     elseif @linux() 
         #exec=['"' fineale_path filesep 'meshing' filesep 'triangle' filesep 'targe2' filesep 'targe2_GLNX86"'];
@@ -101,105 +102,106 @@ function targe2_mesher(commands; varargin)
     l=readline(outio);
     show(l)
     return
-    totals =sscanf(l,'#d');
-    xy =fscanf(fid,'#g', [4,totals(1)]);
-    p = xy';
-
-    es =fscanf(fid,'#g', [4,totals(2)]);
-    es = es';
-
-    ts =fscanf(fid,'#g', [5,totals(3)]);
-    ts = ts';
-
-    fclose (fid);
-
-    #     Assign groups
-    for i= 1:totals(3)
-        group =ts(i,5);
-        if ~exist('groups')
-            groups{group} = [];
-        end
-        if length(groups)<group
-            groups{group} = [];
-        end
-        groups{group} = [groups{group} i];
-    end
-    for i= 1:totals(2)
-        group =es(i,4);
-        if group~=0
-            if ~exist('edge_groups')
-                edge_groups{group} = [];
-            end
-            if length(edge_groups)<group
-                edge_groups{group} = [];
-            end
-            edge_groups{group} = [edge_groups{group} i];
-        end
-    end
-
-    nnodes= size (p, 1);
-    fens=fenode_set(struct('xyz',p(p(:,1),2:3)));
     
-    if quadratic
-        nedges=size(es, 1);
-        nmidnodes =nedges;
-        es= [es, (nnodes+1:nnodes+nmidnodes)'];
-        xy=fens.xyz;
-        xy(nnodes+1:nnodes+nmidnodes,:)=zeros(nmidnodes,2);
-        edge_conns=zeros(nedges,3);
-        for i=1:nedges
-            midx=p(es(i,2:3),2:3);
-            xy(nnodes+i,:)=(midx(1,:) +midx(2,:))/2;
-            edge_conns(i,:) =[es(i,2:3),nnodes+i];
-        end
-        options.conn=edge_conns;
-        edge_fes=fe_set_L3(options);
-        fens=fenode_set(struct('xyz',xy));
-        
-        ncells=size (ts, 1);
-        conns=zeros(ncells,6);
-        for i=1:ncells
-            nns=[intersect(es(ts(i,4),2:3),es(ts(i,2),2:3)),...
-                intersect(es(ts(i,2),2:3),es(ts(i,3),2:3)),...
-                intersect(es(ts(i,3),2:3),es(ts(i,4),2:3))];
-            enns=es(ts(i,2:4),5)';
-            nns = [nns, enns];
-            if det([1 p(nns(1),2:3); 1 p(nns(2),2:3); 1 p(nns(3),2:3)])<0
-                nns=nns([1, 3, 2, 6, 5, 4]);
-            end
-            conns(i,:) =nns;
-        end
-        options.conn=conns;
-        fes=fe_set_T6(options);
-    else
-        ncells=size (ts, 1);
-        options.id =zeros(ncells,1);
-        options.conn =zeros(ncells,3);
-        for i=1:ncells
-            nns=unique([es(ts(i,2),2:3) es(ts(i,3),2:3) es(ts(i,4),2:3)]);
-            if det([1 p(nns(1),2:3); 1 p(nns(2),2:3); 1 p(nns(3),2:3)])<0
-                nns =nns([1, 3, 2]);
-            end
-            options.conn(i,:) =nns;
-        end
-        fes=fe_set_T3(options);
-        
-        nedges=size(es, 1);
-        options.conn =zeros(nedges,2);
-        options.other_dimension=1.0;
-        for i=1:nedges
-            options.conn(i,:) =es(i,2:3);
-        end
-        edge_fes=fe_set_L2(options);
-    end
-    cd(d);
+    # totals =sscanf(l,'#d');
+    # xy =fscanf(fid,'#g', [4,totals(1)]);
+    # p = xy';
 
-    # mesh{1}=fens;
-    # mesh{2}=fes;
-    # drawmesh(mesh); view (2);
+    # es =fscanf(fid,'#g', [4,totals(2)]);
+    # es = es';
+
+    # ts =fscanf(fid,'#g', [5,totals(3)]);
+    # ts = ts';
+
+    # fclose (fid);
+
+    # #     Assign groups
+    # for i= 1:totals(3)
+    #     group =ts(i,5);
+    #     if ~exist('groups')
+    #         groups{group} = [];
+    #     end
+    #     if length(groups)<group
+    #         groups{group} = [];
+    #     end
+    #     groups{group} = [groups{group} i];
+    # end
+    # for i= 1:totals(2)
+    #     group =es(i,4);
+    #     if group~=0
+    #         if ~exist('edge_groups')
+    #             edge_groups{group} = [];
+    #         end
+    #         if length(edge_groups)<group
+    #             edge_groups{group} = [];
+    #         end
+    #         edge_groups{group} = [edge_groups{group} i];
+    #     end
+    # end
+
+    # nnodes= size (p, 1);
+    # fens=fenode_set(struct('xyz',p(p(:,1),2:3)));
+    
+    # if quadratic
+    #     nedges=size(es, 1);
+    #     nmidnodes =nedges;
+    #     es= [es, (nnodes+1:nnodes+nmidnodes)'];
+    #     xy=fens.xyz;
+    #     xy(nnodes+1:nnodes+nmidnodes,:)=zeros(nmidnodes,2);
+    #     edge_conns=zeros(nedges,3);
+    #     for i=1:nedges
+    #         midx=p(es(i,2:3),2:3);
+    #         xy(nnodes+i,:)=(midx(1,:) +midx(2,:))/2;
+    #         edge_conns(i,:) =[es(i,2:3),nnodes+i];
+    #     end
+    #     options.conn=edge_conns;
+    #     edge_fes=fe_set_L3(options);
+    #     fens=fenode_set(struct('xyz',xy));
+        
+    #     ncells=size (ts, 1);
+    #     conns=zeros(ncells,6);
+    #     for i=1:ncells
+    #         nns=[intersect(es(ts(i,4),2:3),es(ts(i,2),2:3)),...
+    #             intersect(es(ts(i,2),2:3),es(ts(i,3),2:3)),...
+    #             intersect(es(ts(i,3),2:3),es(ts(i,4),2:3))];
+    #         enns=es(ts(i,2:4),5)';
+    #         nns = [nns, enns];
+    #         if det([1 p(nns(1),2:3); 1 p(nns(2),2:3); 1 p(nns(3),2:3)])<0
+    #             nns=nns([1, 3, 2, 6, 5, 4]);
+    #         end
+    #         conns(i,:) =nns;
+    #     end
+    #     options.conn=conns;
+    #     fes=fe_set_T6(options);
+    # else
+    #     ncells=size (ts, 1);
+    #     options.id =zeros(ncells,1);
+    #     options.conn =zeros(ncells,3);
+    #     for i=1:ncells
+    #         nns=unique([es(ts(i,2),2:3) es(ts(i,3),2:3) es(ts(i,4),2:3)]);
+    #         if det([1 p(nns(1),2:3); 1 p(nns(2),2:3); 1 p(nns(3),2:3)])<0
+    #             nns =nns([1, 3, 2]);
+    #         end
+    #         options.conn(i,:) =nns;
+    #     end
+    #     fes=fe_set_T3(options);
+        
+    #     nedges=size(es, 1);
+    #     options.conn =zeros(nedges,2);
+    #     options.other_dimension=1.0;
+    #     for i=1:nedges
+    #         options.conn(i,:) =es(i,2:3);
+    #     end
+    #     edge_fes=fe_set_L2(options);
+    # end
+    # cd(d);
+
+    # # mesh{1}=fens;
+    # # mesh{2}=fes;
+    # # drawmesh(mesh); view (2);
 
     return fens,fes,groups,edge_fes,edge_groups;
 end
-
+export targe2mesher
 
 end

@@ -192,19 +192,20 @@ function targe2mesher(commands::String; args...)
         XY[1:size(oxy,1),:]=oxy;    # 
         edgeconn=zeros(Int,nedges,3);
         for i=1:nedges
-            XY[nnodes+i,:]=mean(oxy[es[i,2:3],:],1); # location of mid-side node
+            XY[nnodes+i,:]=mean(oxy[vec(es[i,2:3]),:],1); # location of mid-side node
             edgeconn[i,:] =es[i,[2,3,5]]
         end
         ntris=size (ts, 1);
         triconn=zeros(Int,ntris,6);
         for i=1:ntris               # generate the triangles
-            nns=[intersect(es[ts[i,2],2:3],es[ts[i,2],2:3]),
-                 intersect(es[ts[i,2],2:3],es[ts[i,3],2:3]),
-                 intersect(es[ts[i,3],2:3],es[ts[i,4],2:3])];
+            ix=vec(ts[i,2:4])
+            nns=[intersect(es[ix[1],2:3],es[ix[3],2:3]),
+                 intersect(es[ix[1],2:3],es[ix[2],2:3]),
+                 intersect(es[ix[2],2:3],es[ix[3],2:3])];
             enns=es[ts[i,2:4],5];   # edge mid-side nodes
-            nns = [nns, enns];      # connectivity of the six node triangle
+            nns = vec([nns, enns]);      # connectivity of the six node triangle
             if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]])<0.
-                nns=nns([1, 3, 2, 6, 5, 4]);
+                nns=nns[[1, 3, 2, 6, 5, 4]];
             end
             triconn[i,:] =nns;
         end

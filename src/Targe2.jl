@@ -1,4 +1,35 @@
 module Targe2
+# /*  
+#     =========================================================================
+
+#     targe2: a program for "T"riangulation of "AR"bitrary "GE"ometries in "2"D
+
+#     =========================================================================
+
+#                       Copyright: 1993, 1994 Petr Krysl 
+
+#        Czech Technical University in Prague, Faculty of Civil Engineering,
+#            Dept. Structural Mechanics, 166 29 Prague, Czech Republic,
+#                           e-mail: pk@power2.fsv.cvut.cz
+
+#     This program is free software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation; either version 2 of the License, or
+#     (at your option) any later version.
+
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+
+#     You should have received a copy of the GNU General Public License
+#     along with this program; if not, write to the Free Software
+#     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+#     =========================================================================
+# */
+
+include("Export.jl")
  
 function targe2mesher(commands::String; args...)
     # Automatic triangulation of a general 2-D domain. 
@@ -76,6 +107,7 @@ function targe2mesher(commands::String; args...)
     if (onWindows)
         #c=Pkg.dir("Targe2","bin") * "Targe2.exe" * " -i " * inpath * " -f  2  -o " * outpath;
         exe="C:/Users/P/Documents/GitHub/Targe2.jl" * "/bin/" * "Targe2.exe"
+		# exe="C:/Users/pkrysl/Dropbox/Targe2.jl-master/bin/" * "Targe2.exe"
         # Run it
         run (`"$exe" -i "$inpath" -f  2  -o "$outpath"`);
     else
@@ -158,7 +190,6 @@ end
 XY=zeros(Float64,convert(Int,totals[1]),2)
 XY=float(vs[int(vs[:,1]),2:3])
 nnodes= size (XY, 1);
-show(XY)
 
 if quadratic
     nedges=size(es, 1);
@@ -195,17 +226,13 @@ if quadratic
 else
     ntris=size (ts, 1);
     triconn =zeros(Int,ntris,3);
-    show(ts)
     for i=1:ntris
-show([es[ts[i,2],2:3] es[ts[i,3],2:3] es[ts[i,4],2:3]])
-        nns=unique([es[ts[i,2],2:3] es[ts[i,3],2:3] es[ts[i,4],2:3]]);
-        if det([1 XY[nns[1],2:3]; 1 XY[nns[2],2:3]; 1 XY[nns[3],2:3]])<0.
-            nns =nns([1, 3, 2]);
+        nns=int(unique([es[ts[i,2],2:3] es[ts[i,3],2:3] es[ts[i,4],2:3]]));
+        if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]])<0.
+            nns =nns[[1, 3, 2]];
         end
         triconn[i,:] =nns;
     end
-    show(triconn)
-    
     nedges=size(es, 1);
     edgeconn =zeros(Int,nedges,2);
     for i=1:nedges

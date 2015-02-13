@@ -27,10 +27,10 @@ module Targe2
 #     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #     =========================================================================
-# */
+    # */
 
 include("Export.jl")
- 
+
 function targe2mesher(commands::String; args...)
     # Automatic triangulation of a general 2-D domain. 
     #
@@ -107,7 +107,7 @@ function targe2mesher(commands::String; args...)
     if (onWindows)
         exe=Pkg.dir("Targe2","bin") * "/Targe2.exe"
         #exe="C:/Users/P/Documents/GitHub/Targe2.jl" * "/bin/" * "Targe2.exe"
-		# exe="C:/Users/pkrysl/Dropbox/Targe2.jl-master/bin/" * "Targe2.exe"
+	# exe="C:/Users/pkrysl/Dropbox/Targe2.jl-master/bin/" * "Targe2.exe"
         # Run it
         run (`"$exe" -i "$inpath" -f  2  -o "$outpath"`);
     else
@@ -162,74 +162,70 @@ function targe2mesher(commands::String; args...)
         push!(trigroups[group],i);
     end
 
-# Assign edge groups
-ngroup=  convert(Int,maximum(es[:,4]))
-edgegroups = cell(ngroup)
-for i=1:length(edgegroups)
-    edgegroups[i]=Int[]
-end    
-for i= 1:totals[2]
-    group =es[i,4];
-    if (group!=0)
-        push!(edgegroups[group],i);
-    end
-end
-
-# Vertices
-XY=zeros(Float64,convert(Int,totals[1]),2)
-XY=float(vs[int(vs[:,1]),2:3])
-nnodes= size (XY, 1);
-
-if quadratic
-    nedges=size(es, 1);
-    nmidnodes =nedges;
-    oes=es;
-    es=  zeros(typeof(es),size(es,1),size(es,2)+1)
-    es[:,1:4]=oes;
-    es[:,5]= [(nnodes+1:nnodes+nmidnodes)];
-    oxy=XY;
-    XY=  zeros(typeof(XY),size(XY,1)+nmidnodes,size(XY,2))
-    XY[1:size(oxy,1),:]=oxy;
-    edge_conns=zeros(nedges,3);
-    for i=1:nedges
-        midx=oxy[es[i,2:3],:];
-        XY[nnodes+i,:]=(midx[1,:] +midx[2,:])/2.;
-        edge_conns[i,:] =[es[i,2:3],nnodes+i];
-    end
-    
-    ntris=size (ts, 1);
-    conns=zeros(ntris,6);
-    for i=1:ntris
-        nns=[intersect(es(ts(i,4),2:3),es(ts(i,2),2:3)),
-             intersect(es(ts(i,2),2:3),es(ts(i,3),2:3)),
-             intersect(es(ts(i,3),2:3),es(ts(i,4),2:3))];
-        enns=es(ts(i,2:4),5)';
-        nns = [nns, enns];
-        if det([1 p(nns(1),2:3); 1 p(nns(2),2:3); 1 p(nns(3),2:3)])<0.
-            nns=nns([1, 3, 2, 6, 5, 4]);
+    # Assign edge groups
+    ngroup=  convert(Int,maximum(es[:,4]))
+    edgegroups = cell(ngroup)
+    for i=1:length(edgegroups)
+        edgegroups[i]=Int[]
+    end    
+    for i= 1:totals[2]
+        group =es[i,4];
+        if (group!=0)
+            push!(edgegroups[group],i);
         end
-        conns(i,:) =nns;
     end
-    options.conn=conns;
-    fes=fe_set_T6(options);
-else
-    ntris=size (ts, 1);
-    triconn =zeros(Int,ntris,3);
-    for i=1:ntris
-        nns=int(unique([es[ts[i,2],2:3] es[ts[i,3],2:3] es[ts[i,4],2:3]]));
-        if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]])<0.
-            nns =nns[[1, 3, 2]];
-        end
-        triconn[i,:] =nns;
-    end
-    nedges=size(es, 1);
-    edgeconn =zeros(Int,nedges,2);
-    for i=1:nedges
-        edgeconn[i,:] =es[i,2:3];
-    end
-end
 
-return XY,triconn,trigroups,edgeconn,edgegroups;
+    # Vertices
+    XY=zeros(Float64,convert(Int,totals[1]),2)
+    XY=float(vs[int(vs[:,1]),2:3])
+
+    if quadratic
+        nnodes= size (XY, 1);
+        nedges=size(es, 1);
+        nmidnodes =nedges;
+        oes=es;
+        es=  zeros(typeof(es),size(es,1),size(es,2)+1)
+        es[:,1:4]=oes;
+        es[:,5]= [(nnodes+1:nnodes+nmidnodes)];
+        oxy=XY;
+        XY=  zeros(typeof(XY),size(XY,1)+nmidnodes,size(XY,2))
+        XY[1:size(oxy,1),:]=oxy;    # 
+        edgeconn=zeros(nedges,3);
+        for i=1:nedges
+            XY[nnodes+i,:]=mean(oxy[es[i,2:3],:],1); # location of mid-side node
+            edgeconn[i,:] =es[i,[2,3,5]]
+        end
+        ntris=size (ts, 1);
+        triconn=zeros(Int,ntris,6);
+        for i=1:ntris               # generate the triangles
+            nns=[intersect(es[ts[i,2],2:3],es[ts[i,2],2:3]),
+                 intersect(es[ts[i,2],2:3],es[ts[i,3],2:3]),
+                 intersect(es[ts[i,3],2:3],es[ts[i,4],2:3])];
+            enns=es[ts[i,2:4],5];   # edge mid-side nodes
+            nns = [nns, enns];      # connectivity of the six node triangle
+            if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]])<0.
+                nns=nns([1, 3, 2, 6, 5, 4]);
+            end
+            triconn[i,:] =nns;
+        end
+    else
+        ntris=size (ts, 1);
+        triconn =zeros(Int,ntris,3);
+        for i=1:ntris
+            nns=int(unique([es[ts[i,2],2:3] es[ts[i,3],2:3] es[ts[i,4],2:3]]));
+            if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]])<0.
+                nns =nns[[1, 3, 2]];
+            end
+            triconn[i,:] =nns;
+        end
+        nedges=size(es, 1);
+        edgeconn =zeros(Int,nedges,2);
+        for i=1:nedges
+            edgeconn[i,:] =es[i,2:3];
+        end
+    end
+
+    return XY,triconn,trigroups,edgeconn,edgegroups;
 end
 export targe2mesher
 

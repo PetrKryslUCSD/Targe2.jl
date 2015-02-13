@@ -113,7 +113,10 @@ function targe2mesher(commands::String; args...)
     else
         onLinux=@linux?  true: false
         if (onLinux)
-            show( "not implemented yet" )
+            exe=Pkg.dir("Targe2","bin") * "/targe2_GLNXA64"
+            #exe="/home/pkrysl/Documents/Targe2.jl-master/bin/targe2_GLNXA64"
+            run (`chmod +x "$exe"`);
+	    run (`"$exe" -i "$inpath" -f  2  -o "$outpath"`);
         else
             if (false)
             else
@@ -121,20 +124,6 @@ function targe2mesher(commands::String; args...)
             end
         end
     end
-    
-    #exec=['"' fineale_path filesep 'meshing' filesep 'triangle' filesep 'targe2' filesep 'targe2_GLNX86"'];
-    # c=[exec ' -i ' in ' -f  2 -o ' out ];
-    # system(['chmod +x ' exec]);
-    # elseif strcmp(computer,'GLNXA64')
-    #         exec=['"' fineale_path filesep 'meshing' filesep 'triangle' filesep 'targe2' filesep 'targe2_GLNXA64"'];
-    #         c=[exec ' ' ' -i ' in ' -f  2 -o ' out ];
-    #         system(['chmod +x ' exec]);
-    #     elseif strcmp(computer,'MACI')
-    #         exec=['"' fineale_path filesep 'meshing' filesep 'triangle' filesep 'targe2' filesep 'targe2_MACI"'];
-    #         c=[exec ' -i ' in ' -f  2 -o ' out ];
-    #         system(['chmod +x ' exec]);
-    
-    #         c=['"' fineale_path filesep 'meshing' filesep 'triangle' filesep 'targe2' filesep 'Targe2.exe" ' ' -i ' in ' -f  2  -o ' out];
     
     outio= open(outpath)        # open the output file
     

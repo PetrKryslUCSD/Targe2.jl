@@ -14,4 +14,6 @@ m-ctl-point constant 5.0
 #fens,fes,groups,edge_fes,edge_groups=Targe2.targe2mesher(input)
 XY,triconn,trigroups,edgeconn,edgegroups=Targe2.targe2mesher(input)
 
+Targe2.Export.vtkexport("mesh1.vtk",triconn,XY,Targe2.Export.T3)
+
 end

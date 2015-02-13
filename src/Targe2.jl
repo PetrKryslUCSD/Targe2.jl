@@ -105,7 +105,7 @@ function targe2mesher(commands::String; args...)
 
     onWindows=@windows?  true: false
     if (onWindows)
-        exe=Pkg.dir("Targe2","bin") * "Targe2.exe"
+        exe=Pkg.dir("Targe2","bin") * "/Targe2.exe"
         #exe="C:/Users/P/Documents/GitHub/Targe2.jl" * "/bin/" * "Targe2.exe"
 		# exe="C:/Users/pkrysl/Dropbox/Targe2.jl-master/bin/" * "Targe2.exe"
         # Run it

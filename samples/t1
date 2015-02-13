@@ -1,0 +1,10 @@
+curve 1 line 0 -1 3 1.5 
+curve 2 line 3 1.5  -2 2 
+curve 3 line 0 -1 -2 2  
+curve 4 circle center 0 1 radius 0.5
+subregion 1  property 1 boundary 1 2 -3 hole -4
+m-ctl-point constant 0.2
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  295 triangles, 187 vertices, 482 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

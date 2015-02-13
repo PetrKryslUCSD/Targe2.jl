@@ -1,0 +1,17 @@
+!
+! full circle with steep gradation at the boundary
+!
+curve 4 circle center 0 0 radius 0.9
+
+subregion 1  property 1 boundary 4
+
+m-ctl-point constant 0.3
+! cos(x)*0.9, sin(x)*0.9:
+! x
+! 15   0.86933324   0.23293714
+! 25   0.81567701   0.38035644
+!
+mc-p 1  {0.81567701 0.38035644}  0.0005 0.0015
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  310 triangles, 179 vertices, 488 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

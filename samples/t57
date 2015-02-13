@@ -1,0 +1,31 @@
+! ==+L-SHAPED QUARTER OF A PLATE WITH A CRACK, GRADED
+
+curve  1 line  1 0    2 0   
+curve  2 line  2 0    2 2  
+curve  3 line  2 2    0 2  
+curve  4 line  0 2    0 1  
+curve  5 line  0 1    1 1  
+curve  6 line  1 1    1 0  
+curve  7 line  1.05 1.05    1.065 1.062    ! crack
+curve  8 line  1.065 1.062    1.08 1.08    ! crack
+curve  9 line  1.08 1.08    1.062 1.065   ! crack
+curve 10 line  1.062 1.065    1.05 1.05   ! crack
+
+subregion 1 property 1    boundary 1 2 3 4 5 6 hole -7 -10 -9 -8
+
+m-ctl constant 0.012
+
+!                    alist         list
+!=====================================================
+! cdim  triangles   timing        timing   triangles/s
+!=====================================================
+! 0.03     8066      13.0          13.5     (620/597)
+! 0.02    16862      31.0          34.0     (544/495)
+! 0.015   32490      56.6          66.0     (574/493)
+! 0.012   47700      93.0         110.0     (513/434)
+! 0.01    74786     145.0                   (516/   )
+!=====================================================
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  44590 triangles, 22632 vertices, 67222 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

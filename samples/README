@@ -1,0 +1,52 @@
+/*  
+    =========================================================================
+
+    targe2: a program for "T"riangulation of "AR"bitrary "GE"ometries in "2"D
+
+    =========================================================================
+
+                      Copyright: 1993, 1994 Petr Krysl 
+
+       Czech Technical University in Prague, Faculty of Civil Engineering,
+           Dept. Structural Mechanics, 166 29 Prague, Czech Republic,
+                          e-mail: pk@power2.fsv.cvut.cz
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+    =========================================================================
+*/
+
+
+
+ =========================================================================
+ WHAT IS HERE
+ =========================================================================
+
+        o README        this file
+        o t1 ... t111   sample test problems
+        o run_tests     script to run the checks
+
+
+        Run the tests as
+
+                ksh run_tests [ options ]
+
+        The options are described briefly by the program itself, if it
+is run without any options.  More on these should appear in the User's
+guide (which was not ready as of Nov 1994).  Here it should be noted, 
+that the most useful option is "-X" which lets you view the generation
+progress interactively in X Window System based viewer.
+
+        The results of the checks are in the file "test.log".

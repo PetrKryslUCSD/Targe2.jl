@@ -1,0 +1,9 @@
+curve 1 line 100 99 103 101.5  dim 1.0 1.0
+curve 2 line 103 101.5  98 102 dim 1.0 1.0
+curve 3 line 100 99 98 102  dim 1.0 1.0
+subregion 1  property 1 boundary 1 2 -3 
+mc-const 0.5
+m-ctl-point 1 xy 100.4 100.7 near 0.01 influence 0.02 
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  270 triangles, 150 vertices, 419 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

@@ -1,0 +1,19 @@
+!
+! square with a very strong gradation at two corners (1:500,000)
+!
+curve 1 line -100 -100 100 -100
+curve 2 line 100 -100 100 100
+curve 3 line 100 100 -100 100
+curve 4 line -100 100 -100 -100
+
+subregion 1 property 1 boundary 1 2 3 4
+m-ctl-point constant 10
+m-ctl-point 3 xy  100 , -100 near 0.17 influence 0.2
+m-ctl-point 2 xy  100 , 100 near 0.17 influence 0.2
+m-ctl-point 4 xy  -100 , 100 near 0.17 influence 0.2
+m-ctl-point 5 xy  0 , 0 near 0.017 influence 0.2
+m-ctl-point 1 xy -100 , -100 near 0.00027 influence 0.001
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  5966 triangles, 3063 vertices, 9028 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

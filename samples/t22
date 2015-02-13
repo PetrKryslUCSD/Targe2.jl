@@ -1,0 +1,18 @@
+curve 1 line -0.1,-0.1   0.1,-0.1  
+curve 2 line  0.1,-0.1   0.1, 0.1  
+curve 3 line  0.1, 0.1  -0.1, 0.1 
+curve 4 line -0.1, 0.1  -0.1,-0.1 
+curve 5 line -0.04, -0.02   0.00,-0.001  
+curve 6 line  0.04, 0.02  0.00,-0.001  
+curve 7 line  0.04, 0.02  0.00, 0.001  
+curve 8 line -0.04, -0.02  0.00, 0.001  
+subregion 1 property 1  boundary  1 2 3 4 hole     8 -7 6 -5
+m-ctl-point 1 xy -0.1,-0.1 near 0.02 influence 0.2 
+m-ctl-point 2 xy  0.1,-0.1 near 0.02 influence 0.2 
+m-ctl-point 3 xy  0.1, 0.1 near 0.02 influence 0.2 
+m-ctl-point 4 xy -0.1, 0.1 near 0.02 influence 0.2 
+m-ctl-point 5 xy -0.04,-0.02 near 0.0001 influence 0.0012 
+m-ctl-point 6 xy  0.04, 0.02 near 0.0001 influence 0.0012 
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  1798 triangles, 954 vertices, 2752 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

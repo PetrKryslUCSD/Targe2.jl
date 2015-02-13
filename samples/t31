@@ -1,0 +1,16 @@
+! graded mesh on a triangle
+!
+curve 1 line 0 -1 3 1.5 
+curve 2 line 3 1.5  -2 2
+curve 3 line 0 -1 -2 2  
+subregion 1 property 1 boundary 1 2 -3 
+m-ctl-point constant 0.12
+m-ctl-point 4 xy      2.8 1.2 near 0.005 influence .0250 
+m-ctl-point 3 xy      2.3 1.2 near 0.005 influence .0250 
+m-ctl-point 2 xy      1.3 1. near 0.0025 influence .020 
+m-ctl-point 1 xy      0.3 1.1 near 0.005 influence .0250 
+
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  7003 triangles, 3586 vertices, 10588 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

@@ -1,0 +1,34 @@
+!
+! square with a very strong gradation at two corners (1:500,000)
+!
+! the same as t93, but subdivided into 3 subregions
+!
+curve 1 line -100 -100 -75 -100
+curve 2 line -75 -100 -75 -75
+curve 3 line -75 -75 -100 -75 
+curve 4 line -100 -75 -100 -100
+
+curve 5 line 75 -100 100 -100
+curve 6 line 100 -100 100 -75
+curve 7 line 100 -75 75 -75
+curve 8 line 75 -75 75 -100
+
+curve  9 line -75 -100 75 -100
+curve 10 line 100 -75 100 100
+curve 11 line 100 100 -100 100
+curve 12 line -100 100 -100 -75
+
+
+
+subregion 1 property 1 boundary 1 2 3 4
+subregion 2 property 1 boundary 5 6 7 8
+subregion 3 property 1 boundary -3 -2 9 -8 -7 10 11 12
+
+
+m-ctl-point constant 100
+m-ctl-point 2 xy  100 , -100 near 0.00027 influence 0.002
+m-ctl-point 1 xy -100 , -100 near 0.00027 influence 0.002
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  1028 triangles, 593 vertices, 1620 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

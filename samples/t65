@@ -1,0 +1,45 @@
+curve 11 LINE [3.300000,6.040000] [0.000000,6.040000] GID 766178277,
+curve 13 LINE [0.000000,6.040000] [0.000000,4.53000] GID 766178340,
+curve 14 LINE [0.000000,4.53000] [0.000000,3.02000] GID 766178343,
+curve 15 LINE [0.000000,3.02000] [0.000000,1.51000] GID 766178344,
+curve 16 LINE [0.000000,1.51000] [0.000000,0.0000] GID 766178345,
+curve 1 LINE [0.000000,0.000000] [1.060000,0.000000] GID 766178129,
+curve 2 LINE [1.060000,0.000000] [2.120000,0.000000] GID 766178132,
+curve 3 LINE [2.120000,0.000000] [3.180000,0.000000] GID 766178136,
+curve 4 LINE [3.180000,0.000000] [4.240000,0.000000] GID 766178137,
+curve 5 LINE [4.240000,0.000000] [5.300000,0.000000] GID 766178140,
+curve 7 LINE [5.300000,0.000000] [5.300000,4.040000] GID 766178183,
+curve 8 arc 5.3 4.04 3.3 6.04 center 5.3 6.04 
+
+subregion 1 --
+property 1 --
+material 1 --
+subsoil 1 --
+thickness 0.13 --
+group detail --
+boundary --
+11 --
+13 --
+14 --
+15 --
+16 --
+1 --
+2 --
+3 --
+4 --
+5 --
+7 --
+8 --
+0
+
+
+m-ctl-p constant 5
+m-ctl-point 1 xy 3.3 6 NEAR    0.21 Influence 0.2 
+m-ctl-point 2 xy 5.3 4 NEAR    0.21 Influence 0.2
+m-ctl-point 3 xy 3.4 5.3 NEAR  0.23 Influence 0.2
+m-ctl-point 4 xy 3.9 4.6 NEAR  0.23 Influence 0.2
+m-ctl-point 4 xy 4.6 4.15 NEAR 0.23 Influence 0.2
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  121 triangles, 76 vertices, 196 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

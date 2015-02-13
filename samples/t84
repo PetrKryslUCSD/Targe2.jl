@@ -1,0 +1,34 @@
+!
+!  Ementaler cheese
+!
+curve 56 LINE -1.418952,-1.535336  -1.872144,2.909428 
+curve 57 LINE -1.872144,2.909428  2.834078,2.839707 
+curve 58 LINE 2.834078,2.839707  2.712065,-1.709641 
+curve 59 LINE 2.712065,-1.709641  -1.418952,-1.535336 
+
+curve 61 CIRCLE center -1.296939,2.334224 , radius 0.261457
+curve 70 CIRCLE center -0.965760,1.270966 , radius 0.296830
+curve 84 CIRCLE center -1.070343,0.364583 , radius 0.414317
+curve 88 CIRCLE center -1.018052,-1.186727 , radius 0.187732
+curve 91 CIRCLE center -0.129099,-1.221588 , radius 0.296830
+curve 86 CIRCLE center -0.669443,-0.628953 , radius 0.288525
+curve 82 CIRCLE center 0.080067,-0.018887 , radius 0.331637
+curve 93 CIRCLE center 0.707563,-0.698675 , radius 0.414317
+curve 99 CIRCLE center 1.613946,-1.099575 , radius 0.348609
+curve 97 CIRCLE center 2.380886,-1.029853 , radius 0.165360
+curve 63 CIRCLE center -0.129099,1.985615 , radius 0.474159
+curve 65 CIRCLE center 1.021311,2.072767 , radius 0.398239
+curve 67 CIRCLE center 2.154290,2.299363 , radius 0.174304
+curve 72 CIRCLE center 0.080067,0.870066 , radius 0.343782
+curve 74 CIRCLE center 1.056172,1.218675 , radius 0.198738
+curve 76 CIRCLE center 1.927694,1.375549 , radius 0.478624
+curve 78 CIRCLE center 2.241442,0.312291 , radius 0.187732
+curve 80 CIRCLE center 1.369920,0.399444 , radius 0.408036
+curve 95 CIRCLE center 1.840542,-0.402357 , radius 0.223219
+
+subregion 1 property 1 boundary -59 -58 -57 -56 hole -61 hole -70 hole -84 hole -88 hole -91 hole -86 hole -82 hole -93 hole -99 hole -97 hole -63 hole -65 hole -67 hole -72 hole -74 hole -76 hole -78 hole -80 hole -95
+
+m-ctl-point constant 0.1313
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  1361 triangles, 872 vertices, 2251 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

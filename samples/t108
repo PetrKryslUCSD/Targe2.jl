@@ -1,0 +1,41 @@
+!
+!  Ementaler cheese
+!
+curve 56 LINE -141.8952,-153.5336  -187.2144,290.9428 
+curve 57 LINE -187.2144,290.9428  283.4078,283.9707 
+curve 58 LINE 283.4078,283.9707  271.2065,-170.9641 
+curve 59 LINE 271.2065,-170.9641  -141.8952,-153.5336 
+
+curve 61 CIRCLE center -129.6939,233.4224 , radius 26.1457
+curve 70 CIRCLE center -96.5760,127.0966 , radius 29.6830
+curve 84 CIRCLE center -107.0343,36.4583 , radius 41.4317
+curve 88 CIRCLE center -101.8052,-118.6727 , radius 18.7732
+curve 91 CIRCLE center -12.9099,-122.1588 , radius 29.6830
+curve 86 CIRCLE center -66.9443,-62.8953 , radius 28.8525
+curve 82 CIRCLE center 8.0067,-1.8887 , radius 33.1637
+curve 93 CIRCLE center 70.7563,-69.8675 , radius 41.4317
+curve 99 CIRCLE center 161.3946,-109.9575 , radius 34.8609
+curve 97 CIRCLE center 238.0886,-102.9853 , radius 16.5360
+curve 63 CIRCLE center -12.9099,198.5615 , radius 47.4159
+curve 65 CIRCLE center 102.1311,207.2767 , radius 39.8239
+curve 67 CIRCLE center 215.4290,229.9363 , radius 17.4304
+curve 72 CIRCLE center 8.0067,87.0066 , radius 34.3782
+curve 74 CIRCLE center 105.6172,121.8675 , radius 19.8738
+curve 76 CIRCLE center 192.7694,137.5549 , radius 47.8624
+curve 78 CIRCLE center 224.1442,31.2291 , radius 18.7732
+curve 80 CIRCLE center 136.9920,39.9444 , radius 40.8036
+curve 95 CIRCLE center 184.0542,-40.2357 , radius 22.3219
+
+subregion 1 property 1 boundary -59 -58 -57 -56 hole -61 hole -70 hole -84 hole -88 hole -91 hole -86 hole -82 hole -93 hole -99 hole -97 hole -63 hole -65 hole -67 hole -72 hole -74 hole -76 hole -78 hole -80 hole -95
+m-ctl-point constant 10
+
+mc-p 1 234. -100.              0.006,   0.09
+mc-p 2 -130. 228.              0.006,   0.09
+mc-p 5  0.107,53.5375       0.0006,  0.003
+mc-p 7 199.20,227.99444        0.006,   0.07
+mc-p 8 -98.213125 -137.124318  0.0006,  0.002
+
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  3485 triangles, 2040 vertices, 5543 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

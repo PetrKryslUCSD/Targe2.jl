@@ -1,0 +1,11 @@
+! triangle
+curve 1 line 0 0 1 0  
+curve 2 line 1 0 1 1
+curve 3 line 1 1 0 0
+subregion 1  property 1 boundary 1 2 3 
+m-ctl-point constant 0.5
+mc-p 1 0.6 0 0.001 0.005
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  554 triangles, 300 vertices, 853 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

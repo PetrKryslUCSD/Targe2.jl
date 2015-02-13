@@ -1,0 +1,23 @@
+!
+! triangle with some fixed points
+!
+curve 1 line 0 -10 30 15  
+curve 2 line 30 15  -20 20 
+curve 3 line 0 -10 -20 20  
+subregion 1  property 1 boundary 1 2 -3 
+m-ctl-point constant 1.5
+
+fixed 334 xy 1 2
+fixed 335 xy 2 3
+fixed 333 xy 4 6
+
+fixed 336 xy -5 0
+fixed 337 xy -4 0.1
+fixed 338 xy -3 0.2
+fixed 339 xy -2 0.3
+fixed 340 xy -1 0.4
+fixed 341 xy  0 0.5
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  629 triangles, 357 vertices, 985 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

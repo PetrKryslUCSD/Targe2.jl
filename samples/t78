@@ -1,0 +1,14 @@
+!
+! curved-side triangle
+!
+curve 4 circle center 0 0 radius 0.9
+curve 5 circle center 0 0 radius 2.0
+
+subregion 1  property 1 boundary 5 hole -4
+
+m-ctl-point constant 0.3
+
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  199 triangles, 130 vertices, 329 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

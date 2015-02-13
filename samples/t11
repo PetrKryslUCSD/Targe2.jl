@@ -1,0 +1,15 @@
+curve 1 line 0 , -1 5,7
+curve 2 line 5,7 -2,8
+curve 3 line 0 , -1 -2,8
+curve 4 line 0,2 2,4.2
+curve 5 line 2,4.2 0,4.2
+curve 6 line 0,2 0,4.2
+subregion 2 property 2 boundary 4 5 -6
+subregion 1 property 1 boundary 1 2 -3 hole 6 -5 -4
+m-ctl-point 1 xy 0 , -1 near 0.5 influence 3 
+m-ctl-point 1 xy 2,4.2 near 0.5 influence 1 
+
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  227 triangles, 140 vertices, 366 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

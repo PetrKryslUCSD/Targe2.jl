@@ -1,0 +1,72 @@
+! ==+MAP: NESTED SUBREGIONS, FIXED LINES AND POINTS
+
+
+m-ctl-point constant 10
+m-ctl-point 1 xy 44 60  near 1 influence 10
+
+curve  1 line 200 110  190 130
+curve  2 line 190 130  140 110
+curve  3 line  140 110  150 90
+curve  4 line  150 90 200 110 
+curve  5 line  230 130 230 170
+curve  6 line 230 170 138 148
+curve  7 line 138 148 113 92
+curve  8 line 113 92 187 67
+curve  9 line 187 67  230 130
+curve 10 line 230 170 225 190
+curve 11 line 225 190 118 154
+curve 12 line 118 154 113 120
+curve 13 line 113 120 87 113
+curve 14 line 87 113 41 146
+curve 15 line 80 130 80 207
+curve 16 line 80 207 60 198
+curve 17 line 60 198 42 154
+curve 18 line 42 154 80 130
+curve 19 line 225 190 221 202
+curve 20 line 221 202 150 180
+curve 21 line 150 180 84 230
+curve 22 line 84 230 10 200
+curve 23 line 10 200 20 130
+curve 24 line 20 130 10 71
+curve 25 line 10 71 22 38
+curve 26 line 22 38 38 13
+curve 27 line 38 13 150 10
+curve 28 line 150 10 190 42
+curve 29 line 190 42 202 40
+curve 30 line 202 40 243 83
+curve 31 line 243 83  230 130
+curve 32 line 22 38 78 40
+curve 33 line 78 40 88 70
+curve 34 line 10 71 52 95
+curve 35 line 52 95 113 92
+curve 36 line 140 42 113 63
+curve 37 line 113 63 100 38
+curve 38 line 140 42 125 20
+curve 39 line 140 42 151 31
+curve 40 line 151 31 175 45
+curve 41 line 140 42 170 53
+
+
+subregion 2 material 1 property 1 boundary 5 6 7 8 9 hole -1 -2 -3 -4
+
+subregion 1 material 1 property 1 boundary 1 2 3 4
+
+subregion 3 material 1 property 1 boundary 10 11 12 13 14 -14 -13 -12 -11 --
+          19 20 21 22 23 24 34 35 -7 -6 hole -15 -16 -17 -18
+
+subregion 4 material 1 property 1 boundary 15 16 17 18
+
+subregion 5 material 1 property 1 boundary 31 -9 -8 -35 -34 25 32 33 --
+        -33 -32 26 27 28 29 30  hole 41 -41 39 40 -40 -39 38 -38 36 37 -37 -36 
+
+fixed-point 10013 xy 40 60
+fixed-point 10014 xy 42 60
+fixed-point 10015 xy 44 60
+fixed-point 10016 xy 44 62
+fixed-point 10017 xy 44 64
+
+
+
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+print REMARK: Should generate  3783 triangles, 1963 vertices, 5745 edges
+print @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

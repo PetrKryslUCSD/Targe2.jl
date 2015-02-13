@@ -188,9 +188,9 @@ function targe2mesher(commands::String; args...)
         es[:,1:4]=oes;
         es[:,5]= [(nnodes+1:nnodes+nmidnodes)];
         oxy=XY;
-        XY=  zeros(typeof(XY),size(XY,1)+nmidnodes,size(XY,2))
+        XY=  zeros(typeof(XY[1]),size(XY,1)+nmidnodes,size(XY,2))
         XY[1:size(oxy,1),:]=oxy;    # 
-        edgeconn=zeros(nedges,3);
+        edgeconn=zeros(Int,nedges,3);
         for i=1:nedges
             XY[nnodes+i,:]=mean(oxy[es[i,2:3],:],1); # location of mid-side node
             edgeconn[i,:] =es[i,[2,3,5]]

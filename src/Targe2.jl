@@ -202,7 +202,7 @@ function targe2mesher(commands::String; args...)
             nns=[intersect(es[ix[1],2:3],es[ix[3],2:3]),
                  intersect(es[ix[1],2:3],es[ix[2],2:3]),
                  intersect(es[ix[2],2:3],es[ix[3],2:3])];
-            enns=es[ts[i,2:4],5];   # edge mid-side nodes
+            enns=vec(es[ix,5]);   # edge mid-side nodes
             nns = vec([nns, enns]);      # connectivity of the six node triangle
             if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]])<0.
                 nns=nns[[1, 3, 2, 6, 5, 4]];

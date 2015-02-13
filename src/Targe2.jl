@@ -184,7 +184,7 @@ function targe2mesher(commands::String; args...)
         nedges=size(es, 1);
         nmidnodes =nedges;
         oes=es;
-        es=  zeros(typeof(es),size(es,1),size(es,2)+1)
+        es=  zeros(typeof(es[1]),size(es,1),size(es,2)+1)
         es[:,1:4]=oes;
         es[:,5]= [(nnodes+1:nnodes+nmidnodes)];
         oxy=XY;

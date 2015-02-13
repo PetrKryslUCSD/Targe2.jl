@@ -2,10 +2,8 @@
 
 Constrained triangulation of arbitrary two-dimensional regions.
 
-
-![Alt Sample mesh 1](http://hogwarts.ucsd.edu/~pkrysl/site.images/ScreenHunter_31 Feb. 12 20.51.jpg "Sample mesh 1")
-
-![Alt Sample mesh 2](http://hogwarts.ucsd.edu/~pkrysl/site.images/ScreenHunter_32 Feb. 12 20.55.jpg "Sample mesh 2")
+<img src=  "http://hogwarts.ucsd.edu/~pkrysl/site.images/ScreenHunter_31 Feb. 12 20.51.jpg" width=200>
+<img src=  "http://hogwarts.ucsd.edu/~pkrysl/site.images/ScreenHunter_32 Feb. 12 20.55.jpg" width=200>
 
 Targe2.jl implements an interface to the C-language program
 Targe2 for advancing-front triangulation of two-dimensional regions

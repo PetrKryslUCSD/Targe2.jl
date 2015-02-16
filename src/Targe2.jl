@@ -118,7 +118,11 @@ function targe2mesher(commands::String; args...)
             run (`chmod +x "$exe"`);
 	    run (`"$exe" -i "$inpath" -f  2  -o "$outpath"`);
         else
-            if (false)
+            onMac=@osx?  true: false
+            if (onMac)
+                exe=Pkg.dir("Targe2","bin") * "/targe2_MACI"
+                run (`chmod +x "$exe"`);
+	        run (`"$exe" -i "$inpath" -f  2  -o "$outpath"`);
             else
                 error("Computer platform " * " is not supported: contact the author")
             end

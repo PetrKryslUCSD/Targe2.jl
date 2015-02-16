@@ -19,6 +19,7 @@ Pkg.clone("https://github.com/PetrKryslUCSD/Targe2.jl")
 ## Testing
 
 Pkg.test("Targe2")
+[![Build Status](https://travis-ci.org/PetrKryslUCSD/Targe2.jl.png)](https://travis-ci.org/PetrKryslUCSD/Targe2.jl)
 
 ## Usage
 
@@ -28,3 +29,4 @@ the same information in individual files.
 
 The User's Guide in PDF form is available in the "doc" folder.
 
+ 

@@ -8,6 +8,8 @@ using Targe2
 using Targe2: demo
 ```
 
+## Coarse mesh of a rectangle
+
 A really simple example is this uniform mesh of a rectangle. Select this code and execute in Julia. You should get a picture like the one below.
 ```
 demo("rectangle-uniform", """
@@ -40,6 +42,8 @@ julia> mesh
 ```
 There is only a single group of triangles (i. e. a single subregion, per the specifications), and for each edge (curve) there is one group of edges. The connectivity array point into the array of vertex coordinates, `mesh.xy`.
 
+## Finer mesh on a rectangle
+
 To refine the mesh is easy: we will define the "constant" (uniform) element size to be smaller.
 ```
 demo("rectangle-uniform-finer", """
@@ -52,6 +56,8 @@ m-ctl-point constant 0.5
 """, show = true);
 ```
 <img src=  "rectangle-uniform-finer.png" height=300>
+
+## Mesh of a rectangle with a circular hole
 
 We will introduce a hole in the middle of the rectangle, of circular shape and radius 0.75. We will also make the elements smaller with a factor of two.
 ```
@@ -68,6 +74,8 @@ m-ctl-point constant 0.25
 <img src=  "rectangle-uniform-hole.png" height=300>
 Note that the hole is made by referring to the boundary of the circle with a negative sign. The boundary of a hole needs to be traversed clockwise. The circular curve is by convention positive when it is traversed in the counterclockwise direction, so in order to create a hole we need to list it with a negative sign (`-5`).
 
+## Mesh of a rectangle with a filled circular subregion
+
 Now we will fill the hole with a second subregion.
 ```
 demo("rectangle-uniform-2", """
@@ -83,6 +91,8 @@ m-ctl-point constant 0.25
 ```
 <img src=  "rectangle-uniform-2.png" height=300>
 Note that the circle curve (`5`) is used twice: once with a negative sign to define a hole in the first subregion, and once with a positive sign to define the second subregion which fills the hole in the first subregion.
+
+## Mesh of three subregions
 
 In this example we can add a third subregion to the left of the first subregion. We add three line curves, but note that in order to traverse the boundary of the third subregion counterclockwise, we need to refer to some of these curves with a negative identifier. The previously defined curve `4` is reused for the definition of subregion 3, and in this case it needs to be referenced as `-4`.
 ```
@@ -102,3 +112,4 @@ m-ctl-point constant 0.25
 """, show = true);
 ```
 <img src=  "rectangle-uniform-3.png" height=300>
+

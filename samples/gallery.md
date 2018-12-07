@@ -20,6 +20,7 @@ m-ctl-point constant 2.5
 """, show = true);
 ```
 <img src=  "rectangle-uniform.png" height=300>
+The key is to realize that each subregion needs to be circumscribed with edges that are traversed counterclockwise. Each line segment has an orientation given by the order in which its endpoints are listed. Since all line curves are given so that they are traversed counterclockwise in their positive sense, the boundary consists of the list of the curves with positive signs (`1 2 3 4`).
 
 If we assign the result of the `demo` call to the variable `mesh` as
 ```
@@ -65,3 +66,20 @@ m-ctl-point constant 0.25
 """, show = true);
 ```
 <img src=  "rectangle-uniform-hole.png" height=300>
+Note that the whole is made by referring to the boundary of the circle with a negative sign. The boundary of a hole needs to be traversed clockwise. The circular curve is by convention positive when it is traversed in the counterclockwise direction, so in order to create a whole we need to list it with a negative sign (`-5`).
+
+Now we will fill the hole with a second subregion.
+```
+demo("rectangle-uniform-2", """
+curve 1 line 0 -1 4 -1
+curve 2 line 4 -1  4 2 
+curve 3 line 4 2  0 2  
+curve 4 line 0 2  0 -1
+curve 5 circle center 2 $((2 + -1)/2.0) radius 0.75
+subregion 1  property 1 boundary 1 2 3 4 hole -5
+subregion 2  property 2 boundary 5
+m-ctl-point constant 0.25
+""", show = true);
+```
+<img src=  "rectangle-uniform-2.png" height=300>
+Note that the circle curve (`5`) is used twice: once with a negative sign to define a hole in the first subregion, and once with a positive sign to define the second subregion which fills the hole in the first subregion.

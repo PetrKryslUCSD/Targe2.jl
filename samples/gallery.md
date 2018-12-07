@@ -112,4 +112,4 @@ m-ctl-point constant 0.25
 """, show = true);
 ```
 <img src=  "rectangle-uniform-3.png" height=300>
-
+The colors obviously refer to the numerical identifiers of the subregions (call for the color legend in the figure).

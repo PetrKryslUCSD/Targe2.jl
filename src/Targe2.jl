@@ -218,10 +218,10 @@ end
 
 Generate a mesh Targe2 and show it with Paraview.
 """
-function demo(filename, commands)
+function demo(filename, commands; show = false)
     mesh = targe2mesher(commands)
-    showmesh(filename, mesh)
-    return true
+    show && showmesh(filename, mesh)
+    return mesh
 end
 
 end

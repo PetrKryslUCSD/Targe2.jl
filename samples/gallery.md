@@ -133,19 +133,87 @@ m-ctl-point constant 0.21
 ```
 <img src=  "rectangle-uniform-2-c.png" height=300>
 
-## Mesh of region with a slit
 
+## Graded mesh of a rectangle with a filled circular subregion
 
+Now we will fill the hole with a second subregion.
 ```
-demo("rectangle-uniform-2-c", """
+demo("rectangle-graded-2", """
 curve 1 line 0 -1 4 -1
 curve 2 line 4 -1  4 2 
 curve 3 line 4 2  0 2  
 curve 4 line 0 2  0 -1
-curve 40 line 0.5 -0.5  3.5 1.5
-curve 41 line  3.5 1.5 0.5 -0.5 
-subregion 1  property 1 boundary 1 2 3 4 hole 40 41
+curve 5 circle center 2 $((2 + -1)/2.0) radius 0.75
+subregion 1  property 1 boundary 1 2 3 4 hole -5
+subregion 2  property 2 boundary 5
+m-ctl-point 1 xy 2 $((2 + -1)/2.0) near 0.1 influence 0.75
+m-ctl-point constant 10
+""", show = true);
+```
+<img src=  "rectangle-graded-2.png" height=300>
+
+
+
+## Mesh of region with a slit
+
+
+```
+demo("rectangle-uniform-slit", """
+curve 1 line 0 -1 4 -1
+curve 2 line 4 -1  4 2 
+curve 3 line 4 2  0 2  
+curve 4 line 0 2  0 -1
+curve 40 line  1 0 2 0.501
+curve 41 line  2 0.501 3. 1. 
+curve 42 line  3. 1.  2 0.499
+curve 43 line  2 0.499 1 0
+subregion 1  property 1 boundary 1 2 3 4 hole 40 41 42 43
 m-ctl-point constant 0.31
 """, show = true);
 ```
 <img src=  "rectangle-uniform-slit.png" height=300>
+
+
+## Mesh of region with a Rounded slit
+
+
+```
+a, b, w = 1.0, 0.6, 0.025
+cb, sw = b * 0.999, sqrt(2.0)/2 * w
+demo("rectangle-uniform-rounded-slit", """
+curve 1 line $(-a) $(-a) $(+a) $(-a)
+curve 2 line $(+a) $(-a) $(+a) $(+a)
+curve 3 line $(+a) $(+a) $(-a) $(+a)
+curve 4 line $(-a) $(+a) $(-a) $(-a)
+curve 40 arc $(-b+sw) $(-b-sw) $(-b-sw) $(-b+sw) center $(-cb) $(-cb) 
+curve 41 arc $(+b-sw) $(+b+sw) $(+b+sw) $(+b-sw) center $(+cb) $(+cb) 
+curve 42 line $(+b+sw) $(+b-sw) $(-b+sw) $(-b-sw)
+curve 43 line $(-b-sw) $(-b+sw) $(+b-sw) $(+b+sw)
+subregion 1  property 1 boundary 1 2 3 4 hole 40 41 42 43
+m-ctl-point constant 0.05
+""", show = true);
+```
+<img src=  "rectangle-uniform-rounded-slit.png" height=300>
+
+## Graded mesh of region with a Rounded slit
+
+
+```
+a, b, w = 1.0, 0.6, 0.025
+cb, sw = b * 0.999, sqrt(2.0)/2 * w
+demo("rectangle-graded-rounded-slit", """
+curve 1 line $(-a) $(-a) $(+a) $(-a)
+curve 2 line $(+a) $(-a) $(+a) $(+a)
+curve 3 line $(+a) $(+a) $(-a) $(+a)
+curve 4 line $(-a) $(+a) $(-a) $(-a)
+curve 40 arc $(-b+sw) $(-b-sw) $(-b-sw) $(-b+sw) center $(-cb) $(-cb) 
+curve 41 arc $(+b-sw) $(+b+sw) $(+b+sw) $(+b-sw) center $(+cb) $(+cb) 
+curve 42 line $(+b+sw) $(+b-sw) $(-b+sw) $(-b-sw)
+curve 43 line $(-b-sw) $(-b+sw) $(+b-sw) $(+b+sw)
+subregion 1  property 1 boundary 1 2 3 4 hole 40 41 42 43
+m-ctl-point constant $(a/2)
+m-ctl-point 1 xy $(-cb) $(-cb) near $(w/5) influence $(w)
+m-ctl-point 2 xy $(+cb) $(+cb) near $(w/5) influence $(w)
+""", show = true);
+```
+<img src=  "rectangle-graded-rounded-slit.png" height=300>

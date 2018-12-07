@@ -12,5 +12,5 @@ subregion 1  property 1 boundary 1 2 3 4
 m-ctl-point constant 0.5
 """)
 ```
-<img src=  "rectangle-uniform.png" height=200>
+<img src=  "rectangle-uniform.png" height=300>
  

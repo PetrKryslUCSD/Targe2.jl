@@ -19,7 +19,9 @@ Pkg.clone("https://github.com/PetrKryslUCSD/Targe2.jl")
 ## Testing
 
 Pkg.test("Targe2")
-[![Build Status](https://travis-ci.org/PetrKryslUCSD/Targe2.jl.png)](https://travis-ci.org/PetrKryslUCSD/Targe2.jl)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Build Status](https://travis-ci.org/PetrKryslUCSD/Targe2.jl.svg?branch=master)](https://travis-ci.org/PetrKryslUCSD/Targe2.jl) 
+[![Build status](https://ci.appveyor.com/api/projects/status/0qgyw2aa2529fahy?svg=true)](https://ci.appveyor.com/project/PetrKryslUCSD/Targe2-jl)  
 
 ## Usage
 

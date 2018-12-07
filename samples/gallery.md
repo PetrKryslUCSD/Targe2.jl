@@ -66,7 +66,7 @@ m-ctl-point constant 0.25
 """, show = true);
 ```
 <img src=  "rectangle-uniform-hole.png" height=300>
-Note that the whole is made by referring to the boundary of the circle with a negative sign. The boundary of a hole needs to be traversed clockwise. The circular curve is by convention positive when it is traversed in the counterclockwise direction, so in order to create a whole we need to list it with a negative sign (`-5`).
+Note that the hole is made by referring to the boundary of the circle with a negative sign. The boundary of a hole needs to be traversed clockwise. The circular curve is by convention positive when it is traversed in the counterclockwise direction, so in order to create a hole we need to list it with a negative sign (`-5`).
 
 Now we will fill the hole with a second subregion.
 ```
@@ -83,3 +83,22 @@ m-ctl-point constant 0.25
 ```
 <img src=  "rectangle-uniform-2.png" height=300>
 Note that the circle curve (`5`) is used twice: once with a negative sign to define a hole in the first subregion, and once with a positive sign to define the second subregion which fills the hole in the first subregion.
+
+In this example we can add a third subregion to the left of the first subregion. We add three line curves, but note that in order to traverse the boundary of the third subregion counterclockwise, we need to refer to some of these curves with a negative identifier. The previously defined curve `4` is reused for the definition of subregion 3, and in this case it needs to be referenced as `-4`.
+```
+demo("rectangle-uniform-3", """
+curve 1 line 0 -1 4 -1
+curve 2 line 4 -1  4 2 
+curve 3 line 4 2  0 2  
+curve 4 line 0 2  0 -1
+curve 5 circle center 2 $((2 + -1)/2.0) radius 0.75
+curve 11 line 0 -1 -1 -1
+curve 12 line -1 -1 -1 2
+curve 23 line 0 2 -1 2
+subregion 1  property 1 boundary 1 2 3 4 hole -5
+subregion 2  property 2 boundary 5
+subregion 3  property 3 boundary -12 -11 23 -4
+m-ctl-point constant 0.25
+""", show = true);
+```
+<img src=  "rectangle-uniform-3.png" height=300>

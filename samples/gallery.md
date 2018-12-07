@@ -112,4 +112,23 @@ m-ctl-point constant 0.25
 """, show = true);
 ```
 <img src=  "rectangle-uniform-3.png" height=300>
-The colors obviously refer to the numerical identifiers of the subregions (call for the color legend in the figure).
+The colors obviously refer to the numerical identifiers of the subregions (call for the color legend in the figure). Also we may note here that the numbering of the curves is arbitrary as long as the identifiers of the curves are unique.
+
+## Mesh of two regions with nodes on a given curve
+
+We can enforce the location of nodes on some curves. For instance here we enforce the presence of an additional circle inside the circular subregion 2. And we also enforce the presence of an inclined straight line in subregion 1. This is accomplished by embedding a curve inside the domain with both the positive and negative orientation. In this way the curve is incorporated in the domain triangulation: there is no crack, the triangulation is continuous along the curve from both sides. 
+```
+demo("rectangle-uniform-2-c", """
+curve 1 line 0 -1 4 -1
+curve 2 line 4 -1  4 2 
+curve 3 line 4 2  0 2  
+curve 4 line 0 2  0 -1
+curve 5 circle center 2 $((2 + -1)/2.0) radius 0.75
+curve 7 circle center 2 $((2 + -1)/2.0) radius 0.7
+curve 40 line 0.5 -0.5  1.5 1.5
+subregion 1  property 1 boundary 1 2 3 4 40 -40 hole -5
+subregion 2  property 2 boundary 5 7 -7
+m-ctl-point constant 0.21
+""", show = true);
+```
+<img src=  "rectangle-uniform-2-c.png" height=300>

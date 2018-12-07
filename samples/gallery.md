@@ -132,3 +132,20 @@ m-ctl-point constant 0.21
 """, show = true);
 ```
 <img src=  "rectangle-uniform-2-c.png" height=300>
+
+## Mesh of region with a slit
+
+
+```
+demo("rectangle-uniform-2-c", """
+curve 1 line 0 -1 4 -1
+curve 2 line 4 -1  4 2 
+curve 3 line 4 2  0 2  
+curve 4 line 0 2  0 -1
+curve 40 line 0.5 -0.5  3.5 1.5
+curve 41 line  3.5 1.5 0.5 -0.5 
+subregion 1  property 1 boundary 1 2 3 4 hole 40 41
+m-ctl-point constant 0.31
+""", show = true);
+```
+<img src=  "rectangle-uniform-slit.png" height=300>

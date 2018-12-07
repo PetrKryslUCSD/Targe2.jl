@@ -1,3 +1,4 @@
-using Base.Test
+using Test
+using WriteVTK   
 
 include("srcoftests.jl")

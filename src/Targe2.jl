@@ -146,7 +146,6 @@ function triangulate(commands::String; args...)
         oxy = copy(XY);
         XY = fill(zero(XY[1]), size(XY,1)+nmidnodes, size(XY,2))
         XY[1:size(oxy,1), :] .= oxy; 
-        @show typeof(XY)
         edgeconn = fill(0, nedges, 3);
         for i=1:nedges
             XY[nnodes+i,:] = mean(oxy[vec(es[i,2:3]), :], dims = 1); # location of mid-side node

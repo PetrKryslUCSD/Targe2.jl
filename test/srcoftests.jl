@@ -3,13 +3,15 @@ module tests1
 using Targe2
 using Test
 
-function run1(test, input; keywordargs...)
+function run1(test, input, expected; keywordargs...)
     println("Input " * test)
     result=true;
     mesh = triangulate(input; keywordargs...)
     # showmesh(test, mesh)
     # @show size(mesh.xy, 1), size(mesh.triconn, 1)
-    return size(mesh.xy, 1), size(mesh.triconn, 1)
+    @test abs(size(mesh.xy, 1) - expected[1]) / expected[1] < 0.02
+    @test abs(size(mesh.triconn, 1) - expected[2]) / expected[2] < 0.02
+    return true
 end
  
 ####################################################
@@ -24,7 +26,7 @@ subregion 1  property 1 boundary 1 2 -3 hole -4
 m-ctl-point constant 0.2
 """
 thetest="t1"
-@test run1(thetest,input) ==  (175, 271)    
+run1(thetest, input, (175, 271))    
 
 ####################################################
 # t1q 
@@ -38,7 +40,7 @@ subregion 1  property 1 boundary 1 2 -3 hole -4
 m-ctl-point constant 0.2
 """
 thetest="t1q"
-@test run1(thetest,input; quadratic = true) == (621, 271)   
+run1(thetest, input, (621, 271); quadratic = true) 
   
 ####################################################
 # t10
@@ -54,7 +56,7 @@ subregion 1 property 1 boundary 1 2 -3 hole 6 -5 -4
 m-ctl-point 1 xy 0 , -1 near 0.5 influence 3 
 """
 thetest="t10"
-@test run1(thetest,input) == (131, 197)
+run1(thetest, input, (131, 197))
  
 ####################################################
 # t100
@@ -78,7 +80,7 @@ m-ctl-point 7 xy  30 , -15   near 0.1 influence 1
 
 """
 thetest="t100"
-@test run1(thetest,input) ==  (2521, 4924)
+run1(thetest, input, (2521, 4924))
  
 ####################################################
 # t101
@@ -106,7 +108,7 @@ m-ctl-point 8 xy  50 -50     near 0.06 influence 0.6
 
 """
 thetest="t101"
-@test run1(thetest,input) == (3633, 7028)  
+run1(thetest, input, (3633, 7028))  
 
 ####################################################
 # t102
@@ -129,7 +131,7 @@ m-ctl-point 2 xy  1 , -1 near 0.0003 influence 0.002
 m-ctl-point 1 xy -0.9 , -0.9 near 0.0007 influence 0.006
 """
 thetest="t102"
-@test run1(thetest,input) ==  (212, 290)      
+run1(thetest, input, (212, 290))      
 
 ####################################################
 # t103
@@ -153,7 +155,7 @@ m-ctl-point 1 xy -0.86 -0.86 near 0.0001 influence 0.001
 m-ctl-point 2 xy -0.96 -0.96 near 0.0001 influence 0.0001
 """
 thetest="t103"
-@test run1(thetest,input) == (381, 577)  
+run1(thetest, input, (381, 577))  
 
 ####################################################
 # t104
@@ -174,7 +176,7 @@ subregion 2 property 1 boundary 1 2 3 4 hole -5
 m-ctl-point constant 0.01
 """
 thetest="t104"
-@test run1(thetest,input) == (842, 1430)  
+run1(thetest, input, (842, 1430))  
 
 ####################################################
 # t105
@@ -193,7 +195,7 @@ m-ctl-point 2 xy  100 , -100 near 0.0004 influence 0.02
 m-ctl-point 1 xy -100 , -100 near 0.0004 influence 0.02
 """
 thetest="t105"
-@test run1(thetest,input) == (15174, 29643)
+run1(thetest, input, (15174, 29643))
 
 ####################################################
 # t106
@@ -213,12 +215,8 @@ m-ctl-point 1 xy -100 , -100 near 0.004 influence 0.2
 
 """
 thetest="t106"
-@test run1(thetest,input) == (15641, 30589)     
-####################################################
-####################################################
-####################################################
-####################################################
-####################################################
+run1(thetest, input, (15641, 30589))     
+
 ####################################################
 # t107
 input="""
@@ -260,7 +258,7 @@ mc-p 7 1.9920,2.2799444 0.00008,  0.003
 mc-p 8 -0.98 -1.2 0.000008,  0.001
 """
 thetest="t107"
-@test run1(thetest,input) == (15211, 29343)    
+run1(thetest, input, (15211, 29343))    
 
 ####################################################
 # t108
@@ -303,7 +301,7 @@ mc-p 7 199.20,227.99444        0.006,   0.07
 mc-p 8 -98.213125 -137.124318  0.0006,  0.002
 """
 thetest="t108"
-@test run1(thetest,input) == (1809, 3023)     
+run1(thetest, input, (1809, 3023))     
 
 ####################################################
 # t109
@@ -341,7 +339,7 @@ m-ctl-point constant 13.1313
 mc-p 6 675.055512, -396.398876 0.3 1.3
 """
 thetest="t109"
-@test run1(thetest,input) == (797, 1209)  
+run1(thetest, input, (797, 1209))  
 
 ####################################################
 # t11
@@ -359,7 +357,7 @@ m-ctl-point 1 xy 0 , -1 near 0.5 influence 3
 m-ctl-point 1 xy 2,4.2 near 0.5 influence 1 
 """
 thetest="t11"
-@test run1(thetest,input) ==  (132, 211)     
+run1(thetest, input, (132, 211))     
 
 ####################################################
 # t110
@@ -443,7 +441,7 @@ hole --
 
 """
 thetest="t110"
-@test run1(thetest,input) == (234, 240)      
+run1(thetest, input, (234, 240))      
 
 ####################################################
 # t111
@@ -514,7 +512,7 @@ fixed-point 10016 xy 44 62
 fixed-point 10017 xy 44 64
 """
 thetest="t111"
-@test run1(thetest,input) == (1662, 3181)  
+run1(thetest, input, (1662, 3181))  
 
 ####################################################
 # t112
@@ -598,7 +596,7 @@ hole --
 
 """
 thetest="t112"
-@test run1(thetest,input) == (78, 84)      
+run1(thetest, input, (78, 84))      
 
 ####################################################
 # t113
@@ -672,7 +670,7 @@ fixed-point 10016 xy 44 62
 fixed-point 10017 xy 44 64
 """
 thetest="t113"
-@test run1(thetest,input) == (455, 825)       
+run1(thetest, input, (455, 825))       
 
 ####################################################
 # t12
@@ -689,7 +687,7 @@ m-ctl-point 1 xy 0 , -1 near 0.5 influence 3
 m-ctl-point 1 xy 5,7 near 0.05 influence 1 
 """
 thetest="t12"
-@test run1(thetest,input) == (1709, 3181) 
+run1(thetest, input, (1709, 3181))
 
 ####################################################
 # t13
@@ -706,7 +704,7 @@ subregion 1 property 1 boundary 1 2 -3 hole 6 -5 -4
 m-ctl-point 1 xy 0 , -1 near 0.3 influence 3 
 """
 thetest="t13"
-@test run1(thetest,input) == (331, 552)           
+run1(thetest, input, (331, 552))           
 
 ####################################################
 # t14
@@ -723,7 +721,7 @@ subregion 1 property 1 boundary 1 2 -3 hole 6 -5 -4
 m-ctl-point 1 xy 0 , -1 near 0.3 influence 3 
 """
 thetest="t14"
-@test run1(thetest,input) == (331, 552) 
+run1(thetest, input, (331, 552)) 
 
 ####################################################
 # t15
@@ -742,7 +740,7 @@ m-ctl-point 2 xy 5,7 near 0.3 influence 1
 m-ctl-point 4 xy -2,8 near 0.3 influence 1 
 """
 thetest="t15"
-@test run1(thetest,input) == (816, 1445)       
+run1(thetest, input, (816, 1445))       
 
 ####################################################
 # t16
@@ -763,7 +761,7 @@ m-ctl-point 4 xy 0,5 near 0.01 influence 0.03
 m-ctl-point 4 xy 0,5 near 0.01 influence 0.03 
 """
 thetest="t16"
-@test run1(thetest,input) == (2798, 5324) 
+run1(thetest, input, (2798, 5324)) 
 
 ####################################################
 # t17
@@ -782,7 +780,7 @@ m-ctl-point 2 xy 5,7 near 0.9 influence 4
 m-ctl-point 4 xy -2,8 near 1.3 influence 3 
 """
 thetest="t17"
-@test run1(thetest,input) == (204, 314)   
+run1(thetest, input, (204, 314))   
 
 ####################################################
 # t18
@@ -802,7 +800,7 @@ m-ctl-point 4 xy -2,8 near 1.3 influence 3
 m-ctl-point 4 xy 0,5 near 0.001 influence 0.005 
 """
 thetest="t18"
-@test run1(thetest,input) == (40, 48)  
+run1(thetest, input, (40, 48))  
 
 ####################################################
 # t19
@@ -827,7 +825,7 @@ m-ctl-point 4  xy 2 2.1  near 0.2 influence 2
 m-ctl-point 3  xy -3.5 2  near 0.2 influence 2
 """
 thetest="t19"
-@test run1(thetest,input) ==  (1035, 1907)     
+run1(thetest, input, (1035, 1907))     
 
 ####################################################
 # t2
@@ -841,7 +839,7 @@ mc-const 0.5
 m-ctl-point 1 xy 100.4 100.7 near 0.01 influence 0.02 
 """
 thetest="t2"
-@test run1(thetest,input) == (81, 132)       
+run1(thetest, input, (81, 132))       
 
 ####################################################
 # t20
@@ -854,7 +852,7 @@ subregion 1 property 1 boundary 1 2 -3
 m-ctl-point 1 xy 0,0 near 0.1 influence  0.3 
 """
 thetest="t20"
-@test run1(thetest,input) ==  (727, 1327)      
+run1(thetest, input, (727, 1327))      
 
 ####################################################
 # t21
@@ -867,7 +865,7 @@ subregion 1 material 1 property 1 boundary 1 2 -3
 m-ctl-point 1 xy 0,0 near 0.06 influence 0.18 
 """
 thetest="t21"
-@test run1(thetest,input) == (1993, 3775) 
+run1(thetest, input, (1993, 3775)) 
 
 ####################################################
 # t22
@@ -890,7 +888,7 @@ m-ctl-point 5 xy -0.04,-0.02 near 0.0001 influence 0.0012
 m-ctl-point 6 xy  0.04, 0.02 near 0.0001 influence 0.0012 
 """
 thetest="t22"
-@test run1(thetest,input) == (750, 1390)
+run1(thetest, input, (750, 1390))
 
 ####################################################
 # t23
@@ -909,7 +907,7 @@ m-ctl-point 3 xy   0.75,  0.7 near 0.05 influence .250
 m-ctl-point 4 xy      3.,  1.8 near 0.005 influence .0250 
 """
 thetest="t23"
-@test run1(thetest,input) == (2378, 4519) 
+run1(thetest, input, (2378, 4519))
 
 ####################################################
 # t24
@@ -938,7 +936,7 @@ m-ctl-point 100 xy  10,-10 near 0.2 influence 0.63
 m-ctl-point 100 xy  10,10 near 0.2 influence  0.63 
 """
 thetest="t24"
-@test run1(thetest,input) == (1855, 3466) 
+run1(thetest, input, (1855, 3466))
 
 ####################################################
 # t25
@@ -968,7 +966,7 @@ m-ctl-point constant 0.2
 
 """
 thetest="t25"
-@test run1(thetest,input) == (914, 1627) 
+run1(thetest, input, (914, 1627))
 
 ####################################################
 # t26
@@ -987,7 +985,7 @@ m-ctl-point constant 0.2
 m-ctl-point 4 xy      3 1.5 near 0.005 influence .0250 
 """
 thetest="t26"
-@test run1(thetest,input) == (1344, 2546) 
+run1(thetest, input, (1344, 2546))
 
 ####################################################
 # t27
@@ -1005,7 +1003,7 @@ m-ctl-point 1 xy 0,0 near 0.3 influence 3
 
 """
 thetest="t27"
-@test run1(thetest,input) ==  (87, 130) 
+run1(thetest, input, (87, 130))
 
 ####################################################
 # t28
@@ -1042,7 +1040,7 @@ subregion 1 property 1 boundary -59 -58 -57 -56 hole -61 hole -70 hole -84 hole 
 m-ctl-point constant 0.1
 """
 thetest="t28"
-@test run1(thetest,input) == (1335, 2156)      
+run1(thetest, input, (1335, 2156))      
 
 ####################################################
 # t29
@@ -1079,7 +1077,7 @@ subregion 1 property 1 boundary 31 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 
 m-ctl-point constant 0.8
 """
 thetest="t29"
-@test run1(thetest,input) == (276, 391)  
+run1(thetest, input, (276, 391))  
 
 ####################################################
 # t3
@@ -1109,7 +1107,7 @@ m-ctl-point 3  xy  10,-10  near 0.5 influence 2.5
 m-ctl-point 4  xy  10, 10  near 0.5 influence 2.5 
 """
 thetest="t3"
-@test run1(thetest,input) == (1316, 2452)
+run1(thetest, input, (1316, 2452))
 
 ####################################################
 # t30
@@ -1136,7 +1134,7 @@ fixed 341 xy  0 0.5
 
 """
 thetest="t30"
-@test run1(thetest,input) == (327, 569)     
+run1(thetest, input, (327, 569))     
 
 ####################################################
 # t31
@@ -1154,7 +1152,7 @@ m-ctl-point 2 xy      1.3 1. near 0.0025 influence .020
 m-ctl-point 1 xy      0.3 1.1 near 0.005 influence .0250 
 """
 thetest="t31"
-@test run1(thetest,input) == (2842, 5515) 
+run1(thetest, input, (2842, 5515)) 
 
 ####################################################
 # t32
@@ -1170,7 +1168,7 @@ m-ctl-point 1 xy      -0.3 1.1 near 0.005 influence .0250
 
 """
 thetest="t32"
-@test run1(thetest,input) == (1242, 2349)    
+run1(thetest, input, (1242, 2349))    
 
 ####################################################
 # t33
@@ -1187,7 +1185,7 @@ m-ctl-point 1 xy      -0.3 0.4 near 0.005 influence .020
 
 """
 thetest="t33"
-@test run1(thetest,input) == (1064, 1996)    
+run1(thetest, input, (1064, 1996))    
 
 ####################################################
 # t34
@@ -1202,7 +1200,7 @@ m-ctl-point constant 0.1
 m-ctl-point 1 xy      0.3 0.4 near 0.005 influence .0120 
 """
 thetest="t34"
-@test run1(thetest,input)  == (850, 1570)
+run1(thetest, input, (850, 1570))
 
 ####################################################
 # t35
@@ -1219,7 +1217,7 @@ m-ctl-point 1 xy    0.3 0.96 near 0.0025 influence .0120
 
 """
 thetest="t35"
-@test run1(thetest,input) == (1324, 2517)  
+run1(thetest, input, (1324, 2517))
 
 ####################################################
 # t36
@@ -1236,7 +1234,7 @@ m-ctl-point 1 xy    0. 0.9 near 0.0025 influence .0120
 
 """
 thetest="t36"
-@test run1(thetest,input) == (1325, 2519)     
+run1(thetest, input, (1325, 2519))
 
 ####################################################
 # t37
@@ -1254,7 +1252,7 @@ m-ctl-point 1 xy    0. 0.9 near 0.00125 influence .010
 
 """
 thetest="t37"
-@test run1(thetest,input) == (1947, 3750) 
+run1(thetest, input, (1947, 3750))
 
 ####################################################
 # t38
@@ -1273,7 +1271,7 @@ m-ctl-point 1 xy    0.3 0.6 near 0.005 influence .0120
 m-ctl-point 1 xy    0. 0.9 near 0.00125 influence .010 
 """
 thetest="t38"
-@test run1(thetest,input) == (1933, 3708)    
+run1(thetest, input, (1933, 3708))
 
 ####################################################
 # t39
@@ -1296,7 +1294,7 @@ m-ctl-point 1 xy    0. 0.9 near 0.00125 influence .010
 
 """
 thetest="t39"
-@test run1(thetest,input) == (1793, 3355) 
+run1(thetest, input, (1793, 3355))
 
 ####################################################
 # t4
@@ -1310,7 +1308,7 @@ m-ctl-point 1 xy 0,0 near 0.5 influence 3
 
 """
 thetest="t4"
-@test run1(thetest,input) == (36, 45)   
+run1(thetest, input, (36, 45))
 
 ####################################################
 # t40
@@ -1333,7 +1331,7 @@ m-ctl-point 1 xy    0.3 0.6 near 0.005 influence .0120
 m-ctl-point 1 xy    0. 0.9 near 0.0013 influence .010 
 """
 thetest="t40"
-@test run1(thetest,input) == (1669, 3119)   
+run1(thetest, input, (1669, 3119))
 
 ####################################################
 # t41
@@ -1351,7 +1349,7 @@ m-ctl-point 2 xy 3 1.5  near 0.02 influence 0.1
 m-ctl-point 3 xy  -2 8  near 0.01 influence 0.02
 """
 thetest="t41"
-@test run1(thetest,input) == (140, 208) 
+run1(thetest, input, (140, 208))
 
 ####################################################
 # t42
@@ -1369,7 +1367,7 @@ m-ctl-point 2 xy 3 1.5  near 0.02 influence 0.1
 m-ctl-point 3 xy  -2 8  near 0.01 influence 0.02
 """
 thetest="t42"
-@test run1(thetest,input) == (184, 286) 
+run1(thetest, input, (184, 286))
 
 ####################################################
 # t43
@@ -1388,7 +1386,7 @@ m-ctl-point 3 xy  -2 2  near 0.00005 influence 0.0001
 m-ctl-point 3 xy  0 0  near 0.5 influence 0.5
 """
 thetest="t43"
-@test run1(thetest,input) ==  (585, 944)   
+run1(thetest, input, (585, 944))
 
 ####################################################
 # t44
@@ -1407,7 +1405,7 @@ m-ctl-point 3 xy  -2 2  near 0.000015 influence 0.00003
 
 """
 thetest="t44"
-@test run1(thetest,input) == (485, 783)   
+run1(thetest, input, (485, 783))
 
 ####################################################
 # t45
@@ -1484,7 +1482,7 @@ subreg 1 property 1 boundary 67 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 
 m-ctl-point constant 0.4
 """
 thetest="t45"
-@test run1(thetest,input) == (1700, 2942)   
+run1(thetest, input, (1700, 2942))
 
 ####################################################
 # t46
@@ -1567,7 +1565,7 @@ m-ctl-point 5 xy [5.365456,-10.436697],near 0.02  influence 0.128178
 m-ctl-point 6 xy [1.703795,-10.258946], near 0.02 influence 0.146577
 """
 thetest="t46"
-@test run1(thetest,input) == (4915, 9058) 
+run1(thetest, input, (4915, 9058))
 
 ####################################################
 # t47
@@ -1585,7 +1583,7 @@ m-ctl-point constant 100
 m-ctl-point 1 xy -100 , -100 near .001 influence 0.005
 """
 thetest="t47"
-@test run1(thetest,input) == (144, 218)
+run1(thetest, input, (144, 218))
 
 ####################################################
 # t48
@@ -1603,7 +1601,7 @@ m-ctl-point constant 100
 m-ctl-point 1 xy -100 , -100 near .005 influence 0.005
 """
 thetest="t48"
-@test run1(thetest,input) == (51, 60)   
+run1(thetest, input, (51, 60))
 
 ####################################################
 # t49
@@ -1624,7 +1622,7 @@ m-ctl-point 3 xy -100 ,  100 near .005 influence 0.15
 m-ctl-point 4 xy  100 ,  100 near .005 influence 0.15
 """
 thetest="t49"
-@test run1(thetest,input) == (11521, 22200)  
+run1(thetest, input, (11521, 22200))
 
 ####################################################
 # t5
@@ -1637,7 +1635,7 @@ m-ctl-point 1 xy 0,0 near 1 influence 3
 m-ctl-point 2 xy 0,-1 near 0.1 influence 1
 """
 thetest="t5"
-@test run1(thetest,input) ==  (157, 256)  
+run1(thetest, input, (157, 256))
 
 ####################################################
 # t50
@@ -1657,7 +1655,7 @@ m-ctl-point 1 xy -100 , -100 near .001 influence 0.015
 
 """
 thetest="t50"
-@test run1(thetest,input) == (820, 1482)      
+run1(thetest, input, (820, 1482))
 
 ####################################################
 # t51
@@ -1676,7 +1674,7 @@ m-ctl-point 2 xy  100 , -100 near .02 influence 0.1
 m-ctl-point 1 xy -100 , -100 near .02 influence 0.1
 """
 thetest="t51"
-@test run1(thetest,input) == (258, 410) 
+run1(thetest, input, (258, 410))
 
 ####################################################
 # t52
@@ -1695,7 +1693,7 @@ m-ctl-point 2 xy  100 , -100 near 0.0004 influence 0.001
 m-ctl-point 1 xy -100 , -100 near 0.0004 influence 0.001
 """
 thetest="t52"
-@test run1(thetest,input) == (148, 202)  
+run1(thetest, input, (148, 202))
 
 ####################################################
 # t53
@@ -1714,7 +1712,7 @@ subregion 1 property 1 boundary 1 2 3 4 5 6
 m-ctl-point constant 0.2 
 """
 thetest="t53"
-@test run1(thetest,input) == (87, 132)  
+run1(thetest, input, (87, 132))
 
 ####################################################
 # t54
@@ -1733,7 +1731,7 @@ subregion 1 property 1 boundary 1 2 3 4 5 6
 m-ctl-point constant 0.22 
 """
 thetest="t54"
-@test run1(thetest,input) == (68, 96) 
+run1(thetest, input, (68, 96))
 
 ####################################################
 # t55
@@ -1756,7 +1754,7 @@ subregion 1 property 1    boundary 1 2 3 4 5 6 hole -7 -10 -9 -8
 m-ctl constant 0.3
 """
 thetest="t55"
-@test run1(thetest,input) == (56, 82)        
+run1(thetest, input, (56, 82))
 
 ####################################################
 # t56
@@ -1779,7 +1777,7 @@ subregion 1 property 1    boundary 1 2 3 4 5 6 hole -7 -10 -9 -8
 m-ctl constant 0.33
 """
 thetest="t56"
-@test run1(thetest,input) == (49, 70)  
+run1(thetest, input, (49, 70))
 
 ####################################################
 # t57
@@ -1814,7 +1812,7 @@ m-ctl constant 0.012
 
 """
 thetest="t57"
-@test run1(thetest,input) == (20661, 40648)   
+run1(thetest, input, (20661, 40648))
 
 ####################################################
 # t58
@@ -1827,7 +1825,7 @@ m-ctl-point 1 xy 0,0 near 0.10 influence 3
 
 """
 thetest="t58"
-@test run1(thetest,input) == (731, 1335)
+run1(thetest, input, (731, 1335))
 
 ####################################################
 # t59
@@ -1845,7 +1843,7 @@ m-ctl-point constant 0.26
 
 """
 thetest="t59"
-@test run1(thetest,input) == (327, 584)  
+run1(thetest, input, (327, 584))
 
 ####################################################
 # t6
@@ -1858,7 +1856,7 @@ m-ctl-point 1 xy 3 1.5 near 1 influence 3
 m-ctl-point 2 xy 0,-1 near 0.1 influence 0.5
 """
 thetest="t6"
-@test run1(thetest,input) ==  (97, 149)    
+run1(thetest, input, (97, 149))
 
 ####################################################
 # t60
@@ -1875,7 +1873,7 @@ subregion 1  property 1 boundary 1 -2 3
 m-ctl-point constant 0.2
 """
 thetest="t60"
-@test run1(thetest,input) == (554, 1017)   
+run1(thetest, input, (554, 1017))
 
 ####################################################
 # t61
@@ -1892,7 +1890,7 @@ subregion 1  property 1 boundary 1 -2 3
 m-ctl-point constant 0.2
 """
 thetest="t61"
-@test run1(thetest,input) == (355, 633) 
+run1(thetest, input, (355, 633))
 
 ####################################################
 # t62
@@ -1910,7 +1908,7 @@ m-ctl-point constant 0.2
 
 """
 thetest="t62"
-@test run1(thetest,input) == (129, 181)     
+run1(thetest, input, (129, 181))
 
 ####################################################
 # t63
@@ -1927,7 +1925,7 @@ subregion 1  property 1 boundary 1 2 3
 m-ctl-point constant 1
 """
 thetest="t63"
-@test run1(thetest,input) ==  (79, 123) 
+run1(thetest, input, (79, 123))
 
 ####################################################
 # t64
@@ -1956,7 +1954,7 @@ m-ctl-point 2 xy 5.3 4 NEAR 0.12 Influence 0.2
 
 """
 thetest="t64"
-@test run1(thetest,input) == (61, 88)   
+run1(thetest, input, (61, 88))
 
 ####################################################
 # t65
@@ -2004,7 +2002,7 @@ m-ctl-point 4 xy 3.9 4.6 NEAR  0.23 Influence 0.2
 m-ctl-point 4 xy 4.6 4.15 NEAR 0.23 Influence 0.2
 """
 thetest="t65"
-@test run1(thetest,input) ==  (68, 105)  
+run1(thetest, input, (68, 105))
 
 ####################################################
 # t66
@@ -2052,7 +2050,7 @@ m-ctl-point 4 xy 3.9 4.6 NEAR  0.3 Influence 0.2
 m-ctl-point 4 xy 4.6 4.15 NEAR 0.2 Influence 0.2
 """
 thetest="t66"
-@test run1(thetest,input) == (89, 141)  
+run1(thetest, input, (89, 141))
 
 ####################################################
 # t67
@@ -2117,7 +2115,7 @@ boundary --
 
 """
 thetest="t67"
-@test run1(thetest,input) ==  (73, 109)  
+run1(thetest, input, (73, 109))
 
 ####################################################
 # t68
@@ -2143,7 +2141,7 @@ curve 4 line -100 100 -100 -100
 subregion 1 property 1 boundary 1 2 3 4
 """
 thetest="t68"
-@test run1(thetest,input) == (9, 8)    
+run1(thetest, input, (9, 8))
 
 ####################################################
 # t69
@@ -2165,7 +2163,7 @@ curve  6 discretized 1 1 --
 subregion 1 property 1    boundary 1 2 3 4 5 6 
 """
 thetest="t69"
-@test run1(thetest,input) ==  (8, 6)   
+run1(thetest, input, (8, 6))
 
 ####################################################
 # t7
@@ -2178,7 +2176,7 @@ m-ctl-point 1 xy 3 1.5 near 1 influence 3
 m-ctl-point 2 xy 0,-1 near 0.001 influence 0.01
 """
 thetest="t7"
-@test run1(thetest,input) == (443, 790)  
+run1(thetest, input, (443, 790))
 
 ####################################################
 # t70
@@ -2195,7 +2193,7 @@ subregion 1  property 1 boundary 1 -2 3
 m-ctl-point constant 0.25
 """
 thetest="t70"
-@test run1(thetest,input) ==  (365, 656)     
+run1(thetest, input, (365, 656))
 
 ####################################################
 # t71
@@ -2212,7 +2210,7 @@ subregion 1  property 1 boundary 1 -2 3
 m-ctl-point constant 0.2
 """
 thetest="t71"
-@test run1(thetest,input) == (355, 633)   
+run1(thetest, input, (355, 633))
 
 ####################################################
 # t72
@@ -2229,7 +2227,7 @@ subregion 1  property 1 boundary 1 -2 3
 m-ctl-point constant 0.2
 """
 thetest="t72"
-@test run1(thetest,input) == (371, 663)  
+run1(thetest, input, (371, 663))
 
 ####################################################
 # t73
@@ -2246,7 +2244,7 @@ subregion 1  property 1 boundary 1 2 3
 m-ctl-point constant 0.2
 """
 thetest="t73"
-@test run1(thetest,input) == (129, 181)  
+run1(thetest, input, (129, 181))
 
 ####################################################
 # t74
@@ -2264,7 +2262,7 @@ m-ctl-point constant 1
 
 """
 thetest="t74"
-@test run1(thetest,input) ==  (79, 123)  
+run1(thetest, input, (79, 123))
 
 ####################################################
 # t75
@@ -2313,7 +2311,7 @@ curve 12 discretized 8 4 --
 subregion 1 property 1 boundary 9 10 1 3 4 5 6 7 8  hole -12
 """
 thetest="t75"
-@test run1(thetest,input) ==  (35, 45)   
+run1(thetest, input, (35, 45))
 
 ####################################################
 # t76
@@ -2353,7 +2351,7 @@ subregion 1 property 1 boundary 9 10 1 3 4 5 6 7 8  hole -12
 
 """
 thetest="t76"
-@test run1(thetest,input) == (51, 74)    
+run1(thetest, input, (51, 74))
 
 ####################################################
 # t77
@@ -2371,7 +2369,7 @@ subregion 1  property 1 boundary 1 -2 3 hole -4
 m-ctl-point constant 0.3
 """
 thetest="t77"
-@test run1(thetest,input) == (124, 177)       
+run1(thetest, input, (124, 177))
 
 ####################################################
 # t78
@@ -2387,7 +2385,7 @@ subregion 1  property 1 boundary 5 hole -4
 m-ctl-point constant 0.3
 """
 thetest="t78"
-@test run1(thetest,input) == (103, 145)
+run1(thetest, input, (103, 145))
 
 ####################################################
 # t79
@@ -2408,7 +2406,7 @@ m-ctl-point constant 0.3
 mc-p 1  {0.81567701 0.38035644}  0.0005 0.0015
 """
 thetest="t79"
-@test run1(thetest,input) == (135, 222)     
+run1(thetest, input, (135, 222))     
 
 ####################################################
 # t8
@@ -2456,7 +2454,7 @@ M-CTL-POINT 1 xy 0 0 near 0.012 influence 0.25
 M-CTL-POINT 2 xy  12.6 0 near 0.012 influence 0.25
 """
 thetest="t8"
-@test run1(thetest,input) == (1729, 3095)  
+run1(thetest, input, (1729, 3095)) 
 
 ####################################################
 # t80
@@ -2470,7 +2468,7 @@ m-ctl-point constant 0.5
 mc-p 1 0.6 0 0.001 0.005
 """
 thetest="t80"
-@test run1(thetest,input) ==  (218, 390)
+run1(thetest, input, (218, 390))
 
 ####################################################
 # t81
@@ -2729,7 +2727,7 @@ MC-T 0.511361 -0.300758 0.187140 -0.173736 0.237681 -0.502234 0.293601 0.294905 
 MC-T -0.496560 0.388028 -0.251324 0.154230 -0.110832 0.518095 0.297902 0.296972 0.295909
 """
 thetest="t81"
-@test run1(thetest,input) ==  (87, 136)      
+run1(thetest, input, (87, 136))      
 
 ####################################################
 # t82
@@ -2744,7 +2742,7 @@ mc-p 1 0 0 0.0001 0.0001
 
 """
 thetest="t82"
-@test run1(thetest,input) == (37, 39)   
+run1(thetest, input, (37, 39))   
 
 ####################################################
 # t83
@@ -2760,7 +2758,7 @@ subregion 1  property 1 boundary 5 hole -4
 m-ctl-point constant 0.25
 """
 thetest="t83"
-@test run1(thetest,input) == (147, 221) 
+run1(thetest, input, (147, 221)) 
 
 ####################################################
 # t84
@@ -2798,7 +2796,7 @@ subregion 1 property 1 boundary -59 -58 -57 -56 hole -61 hole -70 hole -84 hole 
 m-ctl-point constant 0.1313
 """
 thetest="t84"
-@test run1(thetest,input) == (806, 1229) 
+run1(thetest, input, (806, 1229))
 
 ####################################################
 # t86
@@ -2837,7 +2835,7 @@ subregion 1 property 1 boundary 9 10 1 3 4 5 6 7 8  hole -12
 
 """
 thetest="t86"
-@test run1(thetest,input) ==  (82, 115)        
+run1(thetest, input, (82, 115))        
 
 ####################################################
 # t87
@@ -2858,7 +2856,7 @@ subregion 1 property 1 boundary 17 18 15 16 hole 20 21 22
 
 """
 thetest="t87"
-@test run1(thetest,input) == (88, 100)     
+run1(thetest, input, (88, 100))
 
 ####################################################
 # t88
@@ -2877,7 +2875,7 @@ m-ctl-point 2 xy  100 , -100 near 0.0004 influence 0.001
 m-ctl-point 1 xy -100 , -100 near 0.0004 influence 0.001
 """
 thetest="t88"
-@test run1(thetest,input) == (148, 202) 
+run1(thetest, input, (148, 202))
 
 ####################################################
 # t89
@@ -2897,7 +2895,7 @@ m-ctl-point 1 xy -100 , -100 near 0.0004 influence 0.003
 
 """
 thetest="t89"
-@test run1(thetest,input) == (495, 821)  
+run1(thetest, input, (495, 821))  
 
 ####################################################
 # t9
@@ -2943,7 +2941,7 @@ SUBREGION 1 PROPERTY 1 BOUNDARY 1 2 3 4 5 6 7 8 hole  9 10 11 12 hole 13 14 15 1
 M-CTL-POINT constant 0.6
 """
 thetest="t9"
-@test run1(thetest,input) ==  (670, 1141)
+run1(thetest, input, (670, 1141))
 
 ####################################################
 # t90
@@ -2963,7 +2961,7 @@ m-ctl-point 1 xy -100 , -100 near 0.0007 influence 0.009
 
 """
 thetest="t90"
-@test run1(thetest,input) ==  (1201, 2177)  
+run1(thetest, input, (1201, 2177))  
 
 ####################################################
 # t91
@@ -2983,7 +2981,7 @@ m-ctl-point 1 xy -100 , -100 near 0.0004 influence 0.01
 
 """
 thetest="t91"
-@test run1(thetest,input) == (4027, 7671)  
+run1(thetest, input, (4027, 7671))  
 
 ####################################################
 # t94
@@ -3003,7 +3001,7 @@ m-ctl-point 1 xy -100 , 0 near 0.0007 influence 0.001
 
 """
 thetest="t94"
-@test run1(thetest,input) == (176, 258)  
+run1(thetest, input, (176, 258))  
  
 ####################################################
 # t96
@@ -3026,6 +3024,6 @@ m-ctl-point 1 xy -100 , -100 near 0.00027 influence 0.001
 
 """
 thetest="t96"
-@test run1(thetest,input) ==  (2453, 4746) 
+run1(thetest, input, (2453, 4746))
 
 end # module tests

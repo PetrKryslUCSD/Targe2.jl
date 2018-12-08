@@ -3,6 +3,8 @@ module tests1
 using Targe2
 using Test
 
+# The tests here have been extracted from the samples in the folder "samples".
+
 function run1(test, input, expected; keywordargs...)
     println("Input " * test)
     result=true;

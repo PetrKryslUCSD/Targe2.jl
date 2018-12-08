@@ -25,8 +25,7 @@ Pkg.test("Targe2")
 ## Usage
 
 Examples of inputs can be found in the srcoftests.jl  source file 
-in the test folder. The folder "samples"  holds pretty much 
-the same information in individual files.
+in the test folder. 
 
 The User's Guide in PDF form is available in the "doc" folder.
 

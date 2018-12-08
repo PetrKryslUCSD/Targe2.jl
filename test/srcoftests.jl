@@ -3,11 +3,12 @@ module tests1
 using Targe2
 using Test
 
-function run1(test, input)
+function run1(test, input; keywordargs...)
     println("Input " * test)
     result=true;
-    mesh = targe2mesher(input)
+    mesh = triangulate(input; keywordargs...)
     # showmesh(test, mesh)
+    # @show size(mesh.xy, 1), size(mesh.triconn, 1)
     return size(mesh.xy, 1), size(mesh.triconn, 1)
 end
  
@@ -24,7 +25,21 @@ m-ctl-point constant 0.2
 """
 thetest="t1"
 @test run1(thetest,input) ==  (175, 271)    
- 
+
+####################################################
+# t1q 
+input="""
+! Triangle with a circular hole; Quadratic elements
+curve 1 line 0 -1 3 1.5 
+curve 2 line 3 1.5  -2 2 
+curve 3 line 0 -1 -2 2  
+curve 4 circle center 0 1 radius 0.5
+subregion 1  property 1 boundary 1 2 -3 hole -4
+m-ctl-point constant 0.2
+"""
+thetest="t1q"
+@test run1(thetest,input; quadratic = true) == (621, 271)   
+  
 ####################################################
 # t10
 input="""

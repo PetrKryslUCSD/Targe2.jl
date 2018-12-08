@@ -33,11 +33,12 @@ __precompile__(false)
 
 using Printf
 using DelimitedFiles
+import Statistics: mean
 
-export targe2mesher
+export targe2mesher, meshcontrol
 
 include("Utilities.jl")
-using .Utilities: _executable, _area2, showmesh
+using .Utilities: _executable, _area2
 
  
 """
@@ -214,14 +215,23 @@ function targe2mesher(commands::String; args...)
 end
 
 """
-    demo(filename, commands)
+    meshcontrol(mesh, h::F) where {F<:Function}
 
-Generate a mesh Targe2 and show it with Paraview.
+Compute the mesh-control commands to produce a graded mesh according to the
+function of element size `h`.
 """
-function demo(filename, commands; show = false)
-    mesh = targe2mesher(commands)
-    show && showmesh(filename, mesh)
-    return mesh
+function meshcontrol(mesh, h::F) where {F<:Function}
+    xy = mesh.xy
+    commands = ""
+    for i = 1:size(mesh.triconn, 1)
+        c = view(mesh.triconn, i, :)
+        centroid = mean(xy[c, :], dims=1)
+        he = h(centroid)
+        comm = "mc-t $(xy[c[1], 1]) $(xy[c[1], 2]) $(xy[c[2], 1]) $(xy[c[2], 2]) $(xy[c[3], 1]) $(xy[c[3], 2]) $he $he $he"
+        commands = commands * comm * "\n"
+    end
+    return commands
 end
+
 
 end

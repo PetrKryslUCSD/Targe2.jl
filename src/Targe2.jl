@@ -1,33 +1,4 @@
 module Targe2
-#
-# =========================================================================
-
-# targe2: a program for "T"riangulation of "AR"bitrary "GE"ometries in "2"D
-
-# =========================================================================
-
-#                   Copyright: 1993, 1994 Petr Krysl 
-
-#    Czech Technical University in Prague, Faculty of Civil Engineering,
-#        Dept. Structural Mechanics, 166 29 Prague, Czech Republic,
-#                       e-mail: pk@power2.fsv.cvut.cz
-
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-# =========================================================================
-#
 
 __precompile__(false)
 
@@ -35,14 +6,14 @@ using Printf
 using DelimitedFiles
 import Statistics: mean
 
-export targe2mesher, meshcontrol
+export triangulate, sizecontrol
 
 include("Utilities.jl")
 using .Utilities: _executable, _area2
 
  
 """
-    targe2mesher(commands::String; args...)
+    triangulate(commands::String; args...)
 
 Automatic triangulation of a general 2-D regions. 
 
@@ -72,7 +43,7 @@ thickness -- thickness of the two-dimensional slab
 # Examples: 
 ```julia
 h=2;
-mesh = targe2mesher(\"""
+mesh = triangulate(\"""
     curve 1 line 0 0 75 0
     curve 2 line 75 0 75 40
     curve 3 line 75 40 0 0
@@ -84,7 +55,7 @@ mesh = targe2mesher(\"""
     \""");
 ```
 """
-function targe2mesher(commands::String; args...)
+function triangulate(commands::String; args...)
    # Process additional arguments
     quadratic = false;
     mergetolerance = eps(1.0);
@@ -174,7 +145,7 @@ function targe2mesher(commands::String; args...)
         es[:,5] .= (nnodes+1:nnodes+nmidnodes);
         oxy = XY;
         XY = fill(zero(XY[1]), size(XY,1)+nmidnodes, size(XY,2))
-        @. XY[1:size(oxy,1), :] = oxy;    # 
+        XY[1:size(oxy,1), :] .= oxy;    # 
         edgeconn = fill(0, nedges, 3);
         for i=1:nedges
             XY[nnodes+i,:] = mean(oxy[vec(es[i,2:3]), :], dims = 1); # location of mid-side node
@@ -215,19 +186,18 @@ function targe2mesher(commands::String; args...)
 end
 
 """
-    meshcontrol(mesh, h::F) where {F<:Function}
+    sizecontrol(mesh, h::F) where {F<:Function}
 
-Compute the mesh-control commands to produce a graded mesh according to the
-function of element size `h`.
+Compute the element-size-control commands to produce a graded mesh according to the
+function of element size `h(x)`. Here `x` is the location.
 """
-function meshcontrol(mesh, h::F) where {F<:Function}
+function sizecontrol(mesh, h::F) where {F<:Function}
     xy = mesh.xy
     commands = ""
     for i = 1:size(mesh.triconn, 1)
         c = view(mesh.triconn, i, :)
-        centroid = mean(xy[c, :], dims=1)
-        he = h(centroid)
-        comm = "mc-t $(xy[c[1], 1]) $(xy[c[1], 2]) $(xy[c[2], 1]) $(xy[c[2], 2]) $(xy[c[3], 1]) $(xy[c[3], 2]) $he $he $he"
+        he1, he2, he3 = [h(xy[idx, :]) for idx in c]
+        comm = "mc-t $(xy[c[1], 1]) $(xy[c[1], 2]) $(xy[c[2], 1]) $(xy[c[2], 2]) $(xy[c[3], 1]) $(xy[c[3], 2]) $he1 $he2 $he3"
         commands = commands * comm * "\n"
     end
     return commands

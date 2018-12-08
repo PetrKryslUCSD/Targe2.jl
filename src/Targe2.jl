@@ -143,9 +143,10 @@ function triangulate(commands::String; args...)
         es = fill(zero(es[1]), size(es,1), size(es,2)+1)
         es[:,1:4] .= oes;
         es[:,5] .= (nnodes+1:nnodes+nmidnodes);
-        oxy = XY;
+        oxy = copy(XY);
         XY = fill(zero(XY[1]), size(XY,1)+nmidnodes, size(XY,2))
-        XY[1:size(oxy,1), :] .= oxy;    # 
+        XY[1:size(oxy,1), :] .= oxy; 
+        @show typeof(XY)
         edgeconn = fill(0, nedges, 3);
         for i=1:nedges
             XY[nnodes+i,:] = mean(oxy[vec(es[i,2:3]), :], dims = 1); # location of mid-side node
@@ -153,17 +154,16 @@ function triangulate(commands::String; args...)
         end
         ntris = size(ts, 1);
         triconn = fill(0, ntris, 6);
+        xsct(es, ix, i, j) = intersect(es[ix[i],2:3],es[ix[j],2:3])[1]
         for i=1:ntris               # generate the triangles
             ix = vec(ts[i,2:4])
-            nns = [intersect(es[ix[1],2:3],es[ix[3],2:3]),
-                 intersect(es[ix[1],2:3],es[ix[2],2:3]),
-                 intersect(es[ix[2],2:3],es[ix[3],2:3])];
+            nns = vec([xsct(es, ix, 1, 3), xsct(es, ix, 1, 2), xsct(es, ix, 2, 3)])
             enns = vec(es[ix,5]);   # edge mid-side nodes
-            nns = vec([nns, enns]);      # connectivity of the six node triangle
-            if det([1 XY[nns[1],:]; 1 XY[nns[2],:]; 1 XY[nns[3],:]]) < 0.0
+            nns = vcat(nns, enns);      # connectivity of the six node triangle
+            if _area2(vec(XY[nns[2],:] - XY[nns[1],:]), vec(XY[nns[3],:] - XY[nns[1],:])) < 0.0
                 nns = nns[[1, 3, 2, 6, 5, 4]];
             end
-            triconn[i,:] = nns;
+            triconn[i,:] .= nns;
         end
     else
         ntris = size(ts, 1);

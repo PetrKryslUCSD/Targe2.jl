@@ -11,8 +11,8 @@ function run1(test, input, expected; keywordargs...)
     mesh = triangulate(input; keywordargs...)
     # showmesh(test, mesh)
     # @show size(mesh.xy, 1), size(mesh.triconn, 1)
-    @test abs(size(mesh.xy, 1) - expected[1]) / expected[1] < 0.02
-    @test abs(size(mesh.triconn, 1) - expected[2]) / expected[2] < 0.02
+    @test abs(size(mesh.xy, 1) - expected[1]) / expected[1] < 0.025
+    @test abs(size(mesh.triconn, 1) - expected[2]) / expected[2] < 0.025
     return true
 end
  

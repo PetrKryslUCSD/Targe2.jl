@@ -71,6 +71,7 @@ function triangulate(commands::String; args...)
     # Input file
     inpath, inio = mktemp()
     @printf(inio,"%s\n",commands);
+    flush(inio)
     close(inio);               # input written
 
     # Output file
@@ -103,7 +104,7 @@ function triangulate(commands::String; args...)
         l = readline(outio);
         ts[j,:] = readdlm(IOBuffer(l))
     end
- 
+
     close(outio)              # close it, we are done reading
     
     # Assign triangle groups

@@ -70,7 +70,13 @@ function triangulate(commands::String; args...)
     
     # Input file
     inpath, inio = mktemp()
-    @printf(inio,"%s\n",commands);
+    l = split(commands, "\n")    
+    for s in l
+        ss = strip(s) # Remove extraneous whitespace
+        if ss != "" # omit empty lines
+            @printf(inio,"%s\n",ss);
+        end
+    end
     flush(inio)
     close(inio);               # input written
 

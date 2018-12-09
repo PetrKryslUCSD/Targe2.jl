@@ -73,20 +73,20 @@ run1(thetest, input, (131, 197))
  
 ####################################################
 # t100
-input="""
+input=""" 
 ! Square with several advancing fronts on points of refinement
 curve 1 line -100 -100 100 -100
 curve 2 line 100 -100 100 100
 curve 3 line 100 100 -100 100
 curve 4 line -100 100 -100 -100
-
+           
 subregion 1 property 1 boundary 1 2 3 4
 m-ctl-point constant 100
 m-ctl-point 1 xy  100 , -100 near 0.3 influence 1
 m-ctl-point 2 xy -100 , -100 near 0.3 influence 1
 m-ctl-point 3 xy -100 , 0    near 0.3 influence 1
 m-ctl-point 4 xy    0 , 100  near 0.3 influence 1
-
+                !
 m-ctl-point 5 xy    0 , 0    near 0.3 influence 1
 m-ctl-point 6 xy  -10 , 10   near 0.2 influence 1
 m-ctl-point 7 xy  30 , -15   near 0.1 influence 1
@@ -193,19 +193,20 @@ run1(thetest, input, (842, 1430))
 
 ####################################################
 # t105
-input="""
-!
+input="""  
+  !
 ! square with a very strong gradation at two corners (1:500,000)
-!
+  !
 curve 1 line -100 -100 100 -100
 curve 2 line 100 -100 100 100
 curve 3 line 100 100 -100 100
 curve 4 line -100 100 -100 -100
-
+   
 subregion 1 property 1 boundary 1 2 3 4
 m-ctl-point constant 100
 m-ctl-point 2 xy  100 , -100 near 0.0004 influence 0.02
 m-ctl-point 1 xy -100 , -100 near 0.0004 influence 0.02
+
 """
 thetest="t105"
 run1(thetest, input, (15174, 29643))

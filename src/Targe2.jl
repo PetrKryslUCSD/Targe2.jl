@@ -5,6 +5,7 @@ __precompile__(false)
 using Printf
 using DelimitedFiles
 import Statistics: mean
+import LinearAlgebra: norm
 
 export triangulate, sizecontrol
 
@@ -209,5 +210,33 @@ function sizecontrol(mesh, h::F) where {F<:Function}
     return commands
 end
 
+function elementsizes(mesh)
+    XY = mesh.xy
+    aelementsizes = fill(0.0, size(XY, 1))
+    function maxupdate!(s, ni, nj, h) 
+        s[ni] = max(s[ni], h)
+        s[nj] = max(s[nj], h)
+        return s
+    end
+    update! = maxupdate!
+    for i = 1:size(mesh.triconn, 1)
+        n1, n2, n3 = view(mesh.triconn, i, :)
+        h = norm(vec(XY[n1,:] - XY[n2,:]))
+        update!(aelementsizes, n1, n2, h)
+        h = norm(vec(XY[n2,:] - XY[n3,:]))
+        update!(aelementsizes, n2, n3, h)
+        h = norm(vec(XY[n3,:] - XY[n1,:]))
+        update!(aelementsizes, n3, n1, h)
+    end
+    if size(mesh.triconn, 2) == 6
+        for i = 1:size(mesh.triconn, 1)
+            n1, n2, n3, n4, n5, n6 = view(mesh.triconn, i, :)
+            aelementsizes[n4] = (aelementsizes[n1] + aelementsizes[n2]) / 2.0
+            aelementsizes[n5] = (aelementsizes[n2] + aelementsizes[n3]) / 2.0
+            aelementsizes[n6] = (aelementsizes[n3] + aelementsizes[n1]) / 2.0
+        end
+    end
+    return aelementsizes
+end
 
 end

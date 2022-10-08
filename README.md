@@ -1,3 +1,8 @@
+[![Project Status: Active – The project is stable.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Build status](https://github.com/PetrKryslUCSD/Targe2.jl/workflows/CI/badge.svg)](https://github.com/PetrKryslUCSD/Targe2.jl/actions)
+[![Code Coverage](https://codecov.io/gh/PetrKryslUCSD/Targe2.jl/branch/master/graph/badge.svg)](https://app.codecov.io/gh/PetrKryslUCSD/Targe2.jl)
+[![Documentation](https://img.shields.io/badge/docs-dev-blue.svg)](https://petrkryslucsd.github.io/Targe2.jl/dev)
+
 # Targe2.jl
 
 Constrained triangulation of arbitrary two-dimensional regions.
@@ -11,20 +16,21 @@ with arbitrary boundaries and vertex and curve constraints.
 The author would appreciate if issues and suggestions were reported. 
 Please don't hesitate to e-mail pkrysl@ucsd.edu.
  
-## Get Targe2.jl 
+## Get Targe2.jl
  
+```
 Pkg.clone("https://github.com/PetrKryslUCSD/Targe2.jl")
+```
 
 ## Testing
 
+```
 Pkg.test("Targe2")
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![Build Status](https://travis-ci.org/PetrKryslUCSD/Targe2.jl.svg?branch=master)](https://travis-ci.org/PetrKryslUCSD/Targe2.jl) 
-[![Build status](https://ci.appveyor.com/api/projects/status/0qgyw2aa2529fahy?svg=true)](https://ci.appveyor.com/project/PetrKryslUCSD/Targe2-jl)  
+```
 
 ## Usage
 
-Examples of inputs can be found in the srcoftests.jl  source file 
+Examples of inputs can be found in the `srcoftests.jl`  source file 
 in the test folder. 
 
 The User's Guide in PDF form is available in the "doc" folder.

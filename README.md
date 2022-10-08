@@ -21,6 +21,9 @@ Please don't hesitate to e-mail pkrysl@ucsd.edu.
 Pkg.clone("https://github.com/PetrKryslUCSD/Targe2.jl")
 ```
 
+Executables are currently available for Windows 10, 11, and Linux.
+The executable for the Mac is currently broken.
+
 ## Testing
 
 ```

@@ -12,7 +12,6 @@ export triangulate, sizecontrol
 include("Utilities.jl")
 using .Utilities: _executable, _area2
 
- 
 """
     triangulate(commands::String; args...)
 

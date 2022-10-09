@@ -44,7 +44,7 @@ The User's Guide in PDF form is available in the "doc" folder.
 
 The visualization software `Paraview` (http://www.paraview.org/) needs to be installed in order to visualize the meshes.
 
-Changed directory to the `demos` subfolder of `Targe2` package. Activate and instantiate as
+Change directory to the `demos` subfolder of `Targe2` package. Activate and instantiate as
 ```
 using Revise; using Pkg; Pkg.activate("."); Pkg.instantiate();
 ```
@@ -71,6 +71,11 @@ subregion 1  property 1 boundary 1 2 3 4
 m-ctl-point constant 2.5
 """, show = true);
 ```
+
+The `show = true` argument will cause a post processing file to be written out
+and handed off to Paraview to be displayed. Note that the Paraview will only
+start if it is in the `Path`. The `.vtu` file will be written irrespectively.
+Its name will be `"rectangle-uniform.vtu"` in this case.
 
 The key is to realize that each subregion needs to be circumscribed with edges
 that are traversed counterclockwise while keeping the subregion to the left.
@@ -100,14 +105,14 @@ julia> mesh
 ```
 
 There is only a single group of triangles (i. e. a single subregion, per the
-specifications), and for each edge (curve) there is one group of edges. The
+specifications), and for each edge (curve) there is one group of mesh edges. The
 connectivity arrays point into the array of vertex coordinates, `mesh.xy`.
 So for instance, edge 2 connects vertices 2 and 3.
 
 ### Finer mesh on a rectangle
 
 To refine the mesh we generated above is easy: we will define the "constant"
-(uniform) element size to be smaller. How result will be as shown here.
+(uniform) element size to be smaller. Now result will be as shown here.
 
 <img src=  "images/rectangle-uniform-finer.png" height=300>
 
@@ -132,7 +137,8 @@ julia> size(mesh.triconn)
 
 ### Mesh of a rectangle with a circular hole
 
-We will introduce a hole in the middle of the rectangle, of circular shape and radius 0.75. We will also make the elements smaller with a factor of two.
+We will introduce a hole in the middle of the rectangle, of circular shape and
+radius 0.75. We will also make the elements smaller with a factor of two.
 
 <img src=  "images/rectangle-uniform-hole.png" height=300>
 

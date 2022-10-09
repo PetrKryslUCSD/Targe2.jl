@@ -85,11 +85,12 @@ and handed off to Paraview to be displayed. Note that the Paraview will only
 start if it is in the `Path`. The `.vtu` file will be written irrespectively.
 Its name will be `"rectangle-uniform.vtu"` in this case.
 
-The key is to realize that each subregion needs to be circumscribed with edges
-that are traversed counterclockwise while keeping the subregion to the left.
-Each line segment (`curve 1 line ...`) has an orientation given by the order in
-which its endpoints are listed. For instance, curve 1 is a line segment from
-the XY coordinates `(0, -1)` to the coordinates `(4, -1)`.
+The key to the input of the definition of the region for the triangulation is to
+realize that each subregion needs to be circumscribed with curves that are
+traversed counterclockwise while keeping the subregion to the left. Each line
+segment (`curve 1 line ...` and so on) has an orientation given by the order in which its
+endpoints are listed. For instance, curve 1 is a line segment from the XY
+coordinates `(0, -1)` to the coordinates `(4, -1)`.
 
 Since all line curves are given so that they are traversed counterclockwise in
 their positive sense, the boundary consists of the list of the curves with

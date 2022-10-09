@@ -398,7 +398,7 @@ forces generation of a single element across the arcs at the ends of the slit.
 
 ### Graded mesh of region with a Rounded slit
 
-The above example is repeated with a graded mesh around the parks at the end of the slit. 
+The above example is repeated with a graded mesh around the arcs at the end of the slit. 
 
 <img src=  "images/rectangle-graded-rounded-slit.png" height=300>
 
@@ -424,5 +424,25 @@ m-ctl-point 2 xy $(+cb) $(+cb) near $(w/5) influence $(w)
 end
 ```
 
+### Mesh of a flange
 
+```
+let
+Re, Ri, rh = 70.0, 40.0, 5.0 # external, internal, bolt hole radius
+rb = (Re+Ri)/2
+h = rh/5
+nh = 7
+demo("flange-uniform", 
+    string("""
+       curve 10 circle center 0 0 radius $(Re)                                                                                                                                                                                       
+       curve 20 circle center 0 0 radius $(Ri)                                                                                                                                                                                       
+       """, 
+       ["curve $i circle center $(cos(2*pi/nh*(i-1))*rb) $(sin(2*pi/nh*(i-1))*rb) radius $(rh)\n" for i in 1:nh]...
+       )   * """
+        subregion 1  property 1 boundary 10 hole -20 $([string(-i) * " " for i in 1:nh]...)
+        m-ctl-point constant $(h)
+        """, show = true);
+end
+
+```
  

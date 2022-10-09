@@ -2,8 +2,6 @@ module demos
 
 export demo
 
-__precompile__(false)
-
 using Targe2
 using Printf
 using DelimitedFiles

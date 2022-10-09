@@ -1,7 +1,5 @@
 module Targe2
 
-__precompile__(false)
-
 using Printf
 using DelimitedFiles
 import Statistics: mean

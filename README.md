@@ -59,7 +59,7 @@ using demos
  unreasonable, for instance when the boundary curves intersect, or when they
  have incorrect orientations. No checks that the inputs are rational are
  performed: the program will simply try to generate the mesh, and if it can't,
- the mesh generation will fail. In some cases silently. 
+ the mesh generation will fail. In some cases without much of an explanation. 
 
 ### Coarse mesh of a rectangle
 

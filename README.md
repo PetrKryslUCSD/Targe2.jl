@@ -426,6 +426,12 @@ end
 
 ### Mesh of a flange
 
+In this example we look at reasonably complex domain: flange with seven bolt holes.
+
+<img src=  "images/flange-uniform.png" height=300>
+
+Select this code and execute in Julia. 
+
 ```
 let
 Re, Ri, rh = 70.0, 40.0, 5.0 # external, internal, bolt hole radius
@@ -434,15 +440,18 @@ h = rh/5
 nh = 7
 demo("flange-uniform", 
     string("""
-       curve 10 circle center 0 0 radius $(Re)                                                                                                                                                                                       
-       curve 20 circle center 0 0 radius $(Ri)                                                                                                                                                                                       
-       """, 
-       ["curve $i circle center $(cos(2*pi/nh*(i-1))*rb) $(sin(2*pi/nh*(i-1))*rb) radius $(rh)\n" for i in 1:nh]...
-       )   * """
-        subregion 1  property 1 boundary 10 hole -20 $([string(-i) * " " for i in 1:nh]...)
-        m-ctl-point constant $(h)
-        """, show = true);
+    curve 10 circle center 0 0 radius $(Re)                                                                                                                                                                                       
+    curve 20 circle center 0 0 radius $(Ri)                                                                                                                                                                                       
+    """, 
+    ["curve $i circle center $(cos(2*pi/nh*(i-1))*rb) $(sin(2*pi/nh*(i-1))*rb) radius $(rh)\n" for i in 1:nh]...
+    )   * """
+    subregion 1  property 1 boundary 10 hole -20 $([string(-i) * " " for i in 1:nh]...)
+    m-ctl-point constant $(h)
+    """, show = true);
 end
 
 ```
+Note that simple comprehensions are used to generate the command lines
+to define the bolthole curves and the list of curves the specified the boundary.
+
  

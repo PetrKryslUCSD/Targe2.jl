@@ -56,7 +56,7 @@ using demos
 
 *Warning*: 
 The command input to the `Targe2` executable has been debugged in the tutorials
-below. Please not that the program will fail if the inputs are unreasonable,
+below. Please note that the program will fail if the inputs are unreasonable,
 for instance when the boundary curves intersect, or when they have incorrect
 orientations. No checks that the inputs are rational are  performed: the
 program will simply try to generate the mesh, and if it can't, the mesh

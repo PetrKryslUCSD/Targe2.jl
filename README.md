@@ -453,4 +453,21 @@ end
 Note that simple comprehensions are used to generate the command lines
 to define the bolthole curves and the list of curves the specified the boundary.
 
- 
+### Polygonal domain
+
+Select this code and execute in Julia. 
+```
+let
+using Targe2.Utilities: polygon
+a, b, d = 2.3, 0.05, 12
+v = [0 0; a 0; a d; a+b d; a+b 0; 2*a+b 0; 2*a+b  d+a; 0 d+a]
+s = polygon(v)
+mesh = demo("maze-uniform-finer", """
+$([_s * "\n" for _s in s]...)
+subregion 1  property 1 boundary $([string(_i) * " " for _i in eachindex(s)]...)
+m-ctl-point constant 0.5
+""", show = true);
+nothing
+end
+```
+

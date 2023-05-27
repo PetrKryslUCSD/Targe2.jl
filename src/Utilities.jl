@@ -54,6 +54,9 @@ julia> s = polygon(v)
  "curve 7 line 4.650000 14.300000 0.000000 14.300000"
  "curve 8 line 0.000000 14.300000 0.000000 0.000000"
 ```
+
+The vertices must be provided in counterclockwise order,
+keeping the domain interior on the left.
 """
 function polygon(v)
     s = []

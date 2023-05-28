@@ -7,24 +7,26 @@ function _executable()
     onWindows = Base.Sys.iswindows() 
     if (onWindows)
         exe = "Targe2.exe"
+        exepath = joinpath(binpath,exe)
+        run(`icacls $exepath /q /grant everyone:(RX)`)
     else
         onLinux = Base.Sys.islinux() 
         if (onLinux)
             exe = "targe2_GLNXA64"
-            exepath = joinpath(@__DIR__,"..","bin",exe)
+            exepath = joinpath(binpath,exe)
             run(`chmod +x $exepath`)
         else
             onMac = Base.Sys.isapple()
             if (onMac)
                 exe = "targe2_MACI"
-                exepath = joinpath(@__DIR__,"..","bin",exe)
+                exepath = joinpath(binpath,exe)
                 run(`chmod +x $exepath`)
             else
-                exe = ""
+                exepath = ""
             end
         end
     end
-    return joinpath(binpath,exe)
+    return exepath
 end
 
 _area2(v, w) = (v[1] * w[2] - v[2] * w[1])

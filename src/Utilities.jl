@@ -8,19 +8,16 @@ function _executable()
     if (onWindows)
         exe = "Targe2.exe"
         exepath = joinpath(binpath,exe)
-        run(`icacls $(exepath) /grant everyone:\(RX\) /Q`)
     else
         onLinux = Base.Sys.islinux() 
         if (onLinux)
             exe = "targe2_GLNXA64"
             exepath = joinpath(binpath,exe)
-            run(`chmod +x $(exepath)`)
         else
             onMac = Base.Sys.isapple()
             if (onMac)
                 exe = "targe2_MACI"
                 exepath = joinpath(binpath,exe)
-                run(`chmod +x $(exepath)`)
             else
                 exepath = ""
             end
